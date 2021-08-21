@@ -1,3 +1,6 @@
 # Ignore compiled files
 *.class
 *.jar
+
+# Ignore planning files
+*.odg
