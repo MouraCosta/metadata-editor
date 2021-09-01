@@ -1,6 +1,7 @@
 mkdir bin/;
 
 javac -d bin/ src/com/moura/Application.java;
+javac -d bin/ src/com/moura/MetadataEditor.java;
 javac -d bin/ -cp bin/ src/MetadataEditor.java;
 
 # Build Jar process
