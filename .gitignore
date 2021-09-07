@@ -3,4 +3,4 @@
 *.jar
 
 # Ignore planning files
-*.odg
+docs/
