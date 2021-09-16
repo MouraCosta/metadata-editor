@@ -5,11 +5,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
-import java.awt.FocusListener;
+import java.awt.event.FocusListener;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -25,6 +26,8 @@ public class NewFieldDialog extends JDialog {
 	private Dimension dialogDimension = new Dimension(424, 112);
 	private String initialFieldMessage = "Put your field here";
 	private String initialValueMessage = "Put your value here";
+
+	final Pattern KEY_PATTERN = Pattern.compile("(([A-Z][a-z]+) ?)+");
 
 	JLabel fieldLabel, valueLabel;
 	JTextField fieldTextField, valueTextField;
@@ -44,7 +47,7 @@ public class NewFieldDialog extends JDialog {
 		GridBagConstraints c = new GridBagConstraints();
 
 		fieldLabel = new JLabel("Field");
-		fieldTextField = new JTextField(initialFieldMessage);
+		fieldTextField = createValidatedTextField(initialFieldMessage);
 		valueLabel = new JLabel("Value");
 		valueTextField = new JTextField(initialValueMessage);
 		addFieldButton = createActionButton();
@@ -76,7 +79,6 @@ public class NewFieldDialog extends JDialog {
 		return inputPanel;
 	}
 
-	// TODO: Create validated text fields creator.
 	private JTextField createValidatedTextField(String initialString) {
 		JTextField textField = new JTextField(initialString);
 		textField.addFocusListener(new FocusListener() {
@@ -89,32 +91,48 @@ public class NewFieldDialog extends JDialog {
 			}
 
 			public void focusLost(FocusEvent event) {
-
+				String text = textField.getText();
+				Matcher matcher = KEY_PATTERN.matcher(text);
+				if (matcher.matches()) {
+					textField.setForeground(ON_VALID_COLOUR);
+				} else {
+					textField.setForeground(ON_INVALID_COLOUR);
+				}
 			}
 		});
+		return textField;
 	}
 
-	// TODO: Add input validation.
 	private JButton createActionButton() {
 		JDialog thisClass = this;
 		JButton button = new JButton("Add field");
 		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				String field = fieldTextField.getText();
-				String value = valueTextField.getText();
+			private void validateAction(String field, String value) {
 				if (! (field.isEmpty() && value.isEmpty())) {
 					if (field.equals(initialFieldMessage) || value.equals(initialValueMessage)) {
 						JOptionPane.showMessageDialog(thisClass, "Do not use the initial values.");
 					} else {
-						boolean success = appView.metadataFields.addField(field, value);
-						JOptionPane.showMessageDialog(
-							thisClass,
-							success? "Metadata Field added sucessfully": "Field already exists"
-						);
+						Matcher matcher = KEY_PATTERN.matcher(fieldTextField.getText());
+						if (matcher.matches()) {
+							boolean success = appView.metadataFields.addField(field, value);
+							JOptionPane.showMessageDialog(
+								thisClass,
+								success? "Metadata Field added sucessfully": "Field already exists"
+							);
+						} else {
+							JOptionPane.showMessageDialog(thisClass,
+								"The field key should be Titlelised.");
+						}
 					}
 				} else {
 					JOptionPane.showMessageDialog(thisClass, "You must insert data to proceed.");
 				}
+			}
+
+			public void actionPerformed(ActionEvent event) {
+				String field = fieldTextField.getText();
+				String value = valueTextField.getText();
+				validateAction(field, value);
 			}
 		});
 		return button;
