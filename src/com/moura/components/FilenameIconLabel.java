@@ -16,7 +16,7 @@ public class FilenameIconLabel extends JPanel {
 	private JLabel filename, fileThumbnail;
 	private JFrame frame;
 
-	final ImageIcon NO_FILE = new ImageIcon("assets/no_file.png");
+	final ImageIcon NO_FILE = new ImageIcon("data/no_file.png");
 
 	/**
 	 * The default constructor for this class.
