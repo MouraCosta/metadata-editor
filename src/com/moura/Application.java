@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.moura.actions.AddNewFieldAction;
 import com.moura.components.FilenameIconLabel;
 import com.moura.components.MetadataFields;
 
@@ -44,12 +45,14 @@ public class Application extends JFrame {
 		show();
 	}
 
+	// TODO: Review this code. It sounds pretty crazy.
 	private void setupButtons() {
 		GridBagConstraints addFConstraints = new GridBagConstraints();
 		addFConstraints.gridx = 1;
 		addFConstraints.gridy = 1;
 		addFConstraints.weightx = 1;
 		addFConstraints.anchor = GridBagConstraints.WEST;
+		addFieldButton.addActionListener(new AddNewFieldAction(this));
 		add(addFieldButton, addFConstraints);
 		JPanel buttonsPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
