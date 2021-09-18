@@ -1,10 +1,12 @@
 package com.moura;
 
 import java.io.File;
-import java.util.logging.Logger;
-import java.util.Set;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Model responsible for creating exiftool processes to change or read metadata.
@@ -13,67 +15,36 @@ import java.util.HashMap;
 public class MetadataEditor {
 
 	private Logger logger = Logger.getLogger(this.getClass().getName());
-	private File file;
-	private ProcessBuilder pb;
 	private Map<File, Map<String, String>> memoisationTable = new HashMap<>();
 
 	/**
-	 * The default constructor of the editor.
-	 * @param file The file to have its metadata changed.
-	 * @throws Exception if the file doesn't exist.
-	 */
-	public MetadataEditor(File file) throws Exception {
-		if (! file.exists()) {
-			throw new Exception("Put only files that exists");
-		} else {
-			this.file = file;
-		}
-	}
-
-	/**
-	 * Sets a new file to editor.
-	 * @return True whether the file given exists, otherwise false.
-	 */
-	public boolean setFile(File file) {
+	* Retrieve the metadata from a given file.
+	* @return A map containing the metadata of the file. The result is null if the file doesn't
+	* exist.
+	*/
+	public Map<String, String> getMetadata(File file) {
 		if (file.exists()) {
-			this.file = file;
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Retrieve the metadata from a given file.
-	 * @return A map containing the metadata of the file.
-	 */
-	public Map<String, String> getMetadata() {
-		Map<String, String> metadata = memoisationTable.get(file);
-		if (metadata != null) {
-			return metadata;
+			// Start the process of getting metadata.
+			Map<String, String> metadata = memoisationTable.get(file);
+			if (metadata != null) {
+				return metadata;
+			} else {
+				// File isn't in the memoisation table. Query the metadata.
+				String output = getOutput(file);
+				String[] fieldsAndValues = output.split("\n");
+				metadata = new HashMap<>();
+				for (String fieldAndValue: fieldsAndValues) {
+					String[] current = fieldAndValue.split(":");
+					current[0] = current[0].strip();
+					current[1] = current[1].strip();
+					metadata.put(current[0], current[1]);
+				}
+				memoisationTable.put(file, metadata);
+				return metadata;
+			}
 		} else {
-			pb = new ProcessBuilder("exiftool", file.getAbsolutePath());
-			Process p;
-			byte[] outputBytes;
-			try {
-				p = pb.start();
-				outputBytes = p.getInputStream().readAllBytes();
-			} catch (Exception err) {
-				return null;
-			}
-			String output = new String(outputBytes);
-
-			// Parse all the stuff
-			String[] keyValues = output.split("\n");
-			metadata = new HashMap<>();
-			for (String keyValue: keyValues) {
-				String[] current = keyValue.split(":");
-				// Strip the keys and values
-				current[0] = current[0].strip();
-				current[1] = current[1].strip();
-				metadata.put(current[0], current[1]);
-			}
-			memoisationTable.put(file, metadata);
-			return metadata;
+			// The file doesn't exist, so just return null.
+			return null;
 		}
 	}
 
@@ -81,25 +52,40 @@ public class MetadataEditor {
 	 * Sets a new metadata to the file.
 	 * @param newMetadata A map containing all the metadata fields that needs to
 	 * be changed.
+	 * @return True when the metadata
 	 */
-	public void setMetadata(Map<String, String> newMetadata) {
+	public boolean setMetadata(File file, Map<String, String> newMetadata) {
 		// TODO: Test this code and reinforce it, too much atomic
-		String command = "exiftool";
+		if (! file.exists()) {
+			return false;
+		}
+		List<String> command = new ArrayList<>();
+		command.add("exiftool");
 		Set<String> keys = newMetadata.keySet();
 		for (String key: keys) {
-			String currentTag = "-";
-			currentTag += key.replaceAll(" ", "");
-			currentTag += "=" + "\"" + newMetadata.get(key) + "\"";
-			command += " " + currentTag;
+			command.add(createTag(key.replaceAll(" ", ""), newMetadata.get(key)));
 		}
-		command += " " + file.getAbsolutePath();
-		logger.info(command);
-		String[] commandArray = command.split(" ");
-		pb = new ProcessBuilder(commandArray);
+		command.add(file.getAbsolutePath());
+		logger.info(command.toString());
 		try {
-			pb.start();
+			new ProcessBuilder(command).start();
 		} catch(Exception err) {
 			err.printStackTrace();
+		}
+		return true;
+	}
+
+	private String createTag(String tagName, String tagValue) {
+		return String.format("-%s=%s", tagName, tagValue);
+	}
+
+	private String getOutput(File file) {
+		try {
+			Process p = new ProcessBuilder("exiftool", file.getAbsolutePath()).start();
+			String output = new String(p.getInputStream().readAllBytes());
+			return output;
+		} catch (Exception err) {
+			return null;
 		}
 	}
 }
