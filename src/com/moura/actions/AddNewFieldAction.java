@@ -2,6 +2,7 @@ package com.moura.actions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 import com.moura.Application;
 import com.moura.components.NewFieldDialog;
@@ -17,7 +18,11 @@ public class AddNewFieldAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		dialog = new NewFieldDialog(appView);
-		dialog.show();
+		if (appView.fileSelected) {
+			dialog = new NewFieldDialog(appView);
+			dialog.show();
+		} else {
+			JOptionPane.showMessageDialog(appView, "Select a File to add metadata fields.");
+		}
 	}
 }

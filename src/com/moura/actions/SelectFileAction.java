@@ -30,6 +30,7 @@ public class SelectFileAction implements ActionListener {
 				app.metadataFields.clean();
 			}
 			File selectedFile = fileChooser.getSelectedFile();
+			app.onChange = selectedFile;
 			app.metadataFields.setupFields(metadataEditor.getMetadata(selectedFile));
 			app.fileSelected = true;
 			app.filenameIconLabel.setThumbnail(selectedFile);
