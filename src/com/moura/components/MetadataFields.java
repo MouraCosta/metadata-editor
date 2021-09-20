@@ -8,14 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 
 /**
  * A class responsible for showing the user all the fields that a file contains.
@@ -52,6 +50,17 @@ public class MetadataFields {
 	}
 
 	/**
+	 * Remove all the entries created from the component.
+	 */
+	public void clean() {
+		fields.forEach((x, y) -> {
+			fieldsPanel.remove(y[0]);
+			fieldsPanel.remove(y[1]);
+		});
+		fields.clear();
+	}
+
+	/**
 	 * Adds a new field to the component.
 	 * @param key A String representing the field.
 	 * @param value A String representing the value of the field.
@@ -84,33 +93,5 @@ public class MetadataFields {
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(10, 0, 0, 10);
 		frame.add(mainPane, c);
-	}
-
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception err) {
-			err.printStackTrace();
-		}
-
-		JFrame frame = new JFrame("MetadataFields test");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new GridBagLayout());
-		
-		MetadataFields metadataFields = new MetadataFields(frame);
-		JButton button = new JButton("Add a field");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				String randomKey = Integer.toString((int) (Math.random() * 50));
-				String randomValue = Integer.toString((int) (Math.random() * 50));
-				metadataFields.addField(randomKey, randomValue);
-			}
-		});
-		metadataFields.add();
-
-		frame.add(button);
-
-		frame.pack();
-		frame.setVisible(true);
 	}
 }

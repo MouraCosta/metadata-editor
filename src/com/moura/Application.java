@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.moura.actions.AddNewFieldAction;
+import com.moura.actions.SelectFileAction;
 import com.moura.components.FilenameIconLabel;
 import com.moura.components.MetadataFields;
 
@@ -18,12 +19,13 @@ import com.moura.components.MetadataFields;
  */
 public class Application extends JFrame {
 
-	private boolean fileSelected = false;
-
 	public FilenameIconLabel filenameIconLabel = new FilenameIconLabel(this);
 	public MetadataFields metadataFields = new MetadataFields(this);
 	public JButton saveButton = new JButton("Save"), selectFileButton = new JButton("Select File"),
 		addFieldButton = new JButton("+");
+
+	public boolean fileSelected;
+	private MetadataEditor metadataEditor = new MetadataEditor();
 
 	/**
 	 * Default class constructor.
@@ -66,6 +68,7 @@ public class Application extends JFrame {
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridx = 0;
 		c.gridy = 0;
+		selectFileButton.addActionListener(new SelectFileAction(this, metadataEditor));
 		buttonsPanel.add(selectFileButton, c);
 		c.gridx = 1;
 		c.gridy = 0;

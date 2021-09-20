@@ -1,14 +1,17 @@
 package com.moura.components;
 
+import java.awt.Image;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
+import java.io.File;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileSystemView;
 
 
 public class FilenameIconLabel extends JPanel {
@@ -17,6 +20,7 @@ public class FilenameIconLabel extends JPanel {
 	private JFrame frame;
 
 	final ImageIcon NO_FILE = new ImageIcon("data/no_file.png");
+	final String MESSAGE_FORMAT = "<html><p>%s</p></html>";
 
 	/**
 	 * The default constructor for this class.
@@ -65,19 +69,9 @@ public class FilenameIconLabel extends JPanel {
 		frame.add(this, c);
 	}
 
-	/**
-	 * Sets the file name.
-	 * @param filename Pretty straightfoward innit?
-	 */
-	public void setFilename(String filename) {
-		this.filename.setText(filename);
-	}
-
-	/**
-	 * Sets the thumbnail of the file.
-	 * @param thumbnail An Image representing the file thumbnail.
-	 */
-	public void setThumbnail(ImageIcon thumbnail) {
-		fileThumbnail.setIcon(thumbnail);
+	public void setThumbnail(File file) {
+		Icon fileIcon = FileSystemView.getFileSystemView().getSystemIcon(file);
+		fileThumbnail.setIcon(fileIcon);
+		filename.setText(String.format(MESSAGE_FORMAT, file.getName()));
 	}
 }
