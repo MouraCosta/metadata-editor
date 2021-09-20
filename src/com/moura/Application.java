@@ -3,12 +3,14 @@ package com.moura;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.moura.actions.AddNewFieldAction;
+import com.moura.actions.SaveChangesAction;
 import com.moura.actions.SelectFileAction;
 import com.moura.components.FilenameIconLabel;
 import com.moura.components.MetadataFields;
@@ -25,6 +27,7 @@ public class Application extends JFrame {
 		addFieldButton = new JButton("+");
 
 	public boolean fileSelected;
+	public File onChange;
 	private MetadataEditor metadataEditor = new MetadataEditor();
 
 	/**
@@ -73,6 +76,7 @@ public class Application extends JFrame {
 		c.gridx = 1;
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.NORTHEAST;
+		saveButton.addActionListener(new SaveChangesAction(this, metadataEditor));
 		buttonsPanel.add(saveButton, c);
 
 		GridBagConstraints panelConstraints = new GridBagConstraints();

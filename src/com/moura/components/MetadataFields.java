@@ -94,4 +94,12 @@ public class MetadataFields {
 		c.insets = new Insets(10, 0, 0, 10);
 		frame.add(mainPane, c);
 	}
+
+	public Map<String, String> getMetadata() {
+		Map<String, String> metadata = new HashMap<>();
+		fields.forEach((k, v) -> {
+			metadata.put(k, ((JTextField) v[1]).getText());
+		});
+		return metadata;
+	}
 }
