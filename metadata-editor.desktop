@@ -1,0 +1,7 @@
+[Desktop Entry]
+Path=/opt/metadata-editor-app/
+Icon=data/icon.png
+Name=Metadata Editor App
+Comment=Edit yout metadata in a very simple way
+Exec=/usr/bin/java -jar app.jar
+Terminal=false
