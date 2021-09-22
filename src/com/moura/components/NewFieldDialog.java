@@ -19,7 +19,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.moura.Application;
-
+/**
+ * JDialog child that contains an already setting for the components and how it
+ * should work.
+ * 
+ * @author de Moura
+ */
 public class NewFieldDialog extends JDialog {
 
 	private Application appView;
@@ -33,6 +38,10 @@ public class NewFieldDialog extends JDialog {
 	JTextField fieldTextField, valueTextField;
 	JButton addFieldButton;
 
+	/**
+	 * The default constructor for this class.
+	 * @param appView is the instance of the JFrame child, Application.
+	 */
 	public NewFieldDialog(Application appView) {
 		super(appView);
 		this.appView = appView;

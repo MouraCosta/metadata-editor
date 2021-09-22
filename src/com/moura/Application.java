@@ -49,36 +49,44 @@ public class Application extends JFrame {
 	 * visible, everything is already setup.
 	 */
 	public void start() {
-		show();
+		setVisible(true);
 	}
 
-	// TODO: Review this code. It sounds pretty crazy.
 	private void setupButtons() {
-		GridBagConstraints addFConstraints = new GridBagConstraints();
-		addFConstraints.gridx = 1;
-		addFConstraints.gridy = 1;
-		addFConstraints.weightx = 1;
-		addFConstraints.anchor = GridBagConstraints.WEST;
-		addFieldButton.addActionListener(new AddNewFieldAction(this));
-		add(addFieldButton, addFConstraints);
-		JPanel buttonsPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-
-		c.weightx = 1;
-		c.weighty = 1;
-		c.ipadx = 8;
-
-		c.anchor = GridBagConstraints.NORTHWEST;
-		c.gridx = 0;
-		c.gridy = 0;
+		// Add functions to the buttons.
 		selectFileButton.addActionListener(new SelectFileAction(this, metadataEditor));
-		buttonsPanel.add(selectFileButton, c);
-		c.gridx = 1;
-		c.gridy = 0;
-		c.anchor = GridBagConstraints.NORTHEAST;
 		saveButton.addActionListener(new SaveChangesAction(this, metadataEditor));
-		buttonsPanel.add(saveButton, c);
+		addFieldButton.addActionListener(new AddNewFieldAction(this));
 
+		JPanel buttonsPanel = new JPanel(new GridBagLayout());
+
+		// Setups the addField button in the application view.
+		GridBagConstraints addFieldButtonConstraints = new GridBagConstraints();
+		addFieldButtonConstraints.gridx = 1;
+		addFieldButtonConstraints.gridy = 1;
+		addFieldButtonConstraints.weightx = 1;
+		addFieldButtonConstraints.anchor = GridBagConstraints.WEST;
+		add(addFieldButton, addFieldButtonConstraints);
+
+		// Setups the selectFile button in the application view.
+		GridBagConstraints selectFileButtonConstraints = new GridBagConstraints();
+		selectFileButtonConstraints.weightx = 1;
+		selectFileButtonConstraints.weighty = 1;
+		selectFileButtonConstraints.anchor = GridBagConstraints.NORTHWEST;
+		selectFileButtonConstraints.gridx = 0;
+		selectFileButtonConstraints.gridy = 0;
+		buttonsPanel.add(selectFileButton, selectFileButtonConstraints);
+
+		// Setups the save button in the application view.
+		GridBagConstraints saveButtonConstraints = new GridBagConstraints();
+		saveButtonConstraints.weightx = 1;
+		saveButtonConstraints.weighty = 1;
+		saveButtonConstraints.gridx = 1;
+		saveButtonConstraints.gridy = 0;
+		saveButtonConstraints.anchor = GridBagConstraints.NORTHEAST;
+		buttonsPanel.add(saveButton, saveButtonConstraints);
+
+		// Setups the panel that hold the save and selectFile buttons.
 		GridBagConstraints panelConstraints = new GridBagConstraints();
 		panelConstraints.gridx = 1;
 		panelConstraints.gridy = 2;
@@ -88,7 +96,6 @@ public class Application extends JFrame {
 		add(buttonsPanel, panelConstraints);
 	}
 
-	// TODO: Go organise all the components in the place they should be
 	private void setupComponents() {
 		filenameIconLabel.add();
 		metadataFields.add();

@@ -8,12 +8,22 @@ import javax.swing.JFileChooser;
 import com.moura.Application;
 import com.moura.MetadataEditor;
 
+/**
+ * Class responsible for representing the action of selecting a file.
+ * @author de Moura
+ */
 public class SelectFileAction implements ActionListener {
 
 	Application app;
 	MetadataEditor metadataEditor;
 	JFileChooser fileChooser = new JFileChooser();
 
+	/**
+	 * Default constructor of this component.
+	 * 
+	 * @param app An Application object that holds the whole app view.
+	 * @param metadataEditor A MetadataEditor object responsible for doing the
+	 * whole app processing.*/
 	public SelectFileAction(Application app, MetadataEditor metadataEditor) {
 		this.app = app;
 		this.metadataEditor = metadataEditor;

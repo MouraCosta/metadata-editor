@@ -14,13 +14,13 @@ public class AddNewFieldAction implements ActionListener {
 
 	public AddNewFieldAction(Application appView) {
 		this.appView = appView;
+		dialog = new NewFieldDialog(appView);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (appView.fileSelected) {
-			dialog = new NewFieldDialog(appView);
-			dialog.show();
+			dialog.setVisible(true);
 		} else {
 			JOptionPane.showMessageDialog(appView, "Select a File to add metadata fields.");
 		}

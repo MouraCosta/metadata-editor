@@ -13,7 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileSystemView;
 
-
+// TODO: Find a way to load system icons
+/**
+ * Class responsible for showing the user the selected file.
+ * @author de Moura
+ */
 public class FilenameIconLabel extends JPanel {
 
 	private JLabel filename, fileThumbnail;
@@ -53,7 +57,7 @@ public class FilenameIconLabel extends JPanel {
 		add(fileThumbnail, thumbnailConstraints);
 		add(filename, filenameConstraints);
 	}
-	// TODO: Put this component in the right position
+
 	/**
 	 * Adds this component to the main frame.
 	 */
@@ -69,9 +73,13 @@ public class FilenameIconLabel extends JPanel {
 		frame.add(this, c);
 	}
 
+	/**
+	 * Change the view of this component by changing the label for the file
+	 * name in the File object and setting an icon of its file.
+	 * @param file The source where this method is going to get the file name
+	 * and the file icon.
+	 */
 	public void setThumbnail(File file) {
-		Icon fileIcon = FileSystemView.getFileSystemView().getSystemIcon(file);
-		fileThumbnail.setIcon(fileIcon);
 		filename.setText(String.format(MESSAGE_FORMAT, file.getName()));
 	}
 }
