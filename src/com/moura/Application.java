@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.moura.actions.AddNewFieldAction;
+import com.moura.actions.DeleteFieldAction;
 import com.moura.actions.SaveChangesAction;
 import com.moura.actions.SelectFileAction;
 import com.moura.components.FilenameIconLabel;
@@ -24,7 +25,7 @@ public class Application extends JFrame {
 	public FilenameIconLabel filenameIconLabel = new FilenameIconLabel(this);
 	public MetadataFields metadataFields = new MetadataFields(this);
 	public JButton saveButton = new JButton("Save"), selectFileButton = new JButton("Select File"),
-		addFieldButton = new JButton("+");
+		addFieldButton = new JButton("+"), deleteFieldButton = new JButton("-");
 
 	public boolean fileSelected;
 	public File onChange;
@@ -57,6 +58,7 @@ public class Application extends JFrame {
 		selectFileButton.addActionListener(new SelectFileAction(this, metadataEditor));
 		saveButton.addActionListener(new SaveChangesAction(this, metadataEditor));
 		addFieldButton.addActionListener(new AddNewFieldAction(this));
+		deleteFieldButton.addActionListener(new DeleteFieldAction(this));
 
 		JPanel buttonsPanel = new JPanel(new GridBagLayout());
 
@@ -67,6 +69,15 @@ public class Application extends JFrame {
 		addFieldButtonConstraints.weightx = 1;
 		addFieldButtonConstraints.anchor = GridBagConstraints.WEST;
 		add(addFieldButton, addFieldButtonConstraints);
+
+		// Setups the delete field button in the application view.
+		GridBagConstraints deleteButtonConstraints = new GridBagConstraints();
+		deleteButtonConstraints.gridx = 1;
+		deleteButtonConstraints.gridy = 1;
+		deleteButtonConstraints.weightx = 1;
+		deleteButtonConstraints.anchor = GridBagConstraints.WEST;
+		deleteButtonConstraints.insets = new Insets(0, 45, 0, 0);
+		add(deleteFieldButton, deleteButtonConstraints);
 
 		// Setups the selectFile button in the application view.
 		GridBagConstraints selectFileButtonConstraints = new GridBagConstraints();
