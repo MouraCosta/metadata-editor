@@ -29,7 +29,7 @@ Installation
 ============
 
 After the installation of the app dependencies, all you have to do now is just
-go to the project folder and run ::
+go to the project folder and run (use sudo of course)::
 
     ./install
 
