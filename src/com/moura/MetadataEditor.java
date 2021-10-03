@@ -19,8 +19,8 @@ public class MetadataEditor {
 
 	/**
 	* Retrieve the metadata from a given file.
-	* @return A map containing the metadata of the file. The result is null if the file doesn't
-	* exist.
+	* @return A map containing the metadata of the file. The result is null if
+	* the file doesn't exist.
 	*/
 	public Map<String, String> getMetadata(File file) {
 		if (file.exists()) {

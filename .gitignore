@@ -2,9 +2,6 @@
 *.class
 *.jar
 
-# Ignore planning files
-docs/
-
 # Ignore trivial files
 *.svg
 .vscode/
