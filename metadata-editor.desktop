@@ -6,4 +6,4 @@ Name=MetadataEditor
 Comment=Edit yout metadata in a very simple way
 Exec=/usr/bin/java -jar app.jar
 Terminal=false
-StartupWMClass=metadata-editor
+StartupWMClass=MetadataEditor
