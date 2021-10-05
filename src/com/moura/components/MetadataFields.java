@@ -113,6 +113,8 @@ public class MetadataFields {
 			JComponent[] components = fields.get(key);
 			fieldsPanel.remove(components[0]);
 			fieldsPanel.remove(components[1]);
+
+			fields.remove(key);
 		});
 		fieldsPanel.revalidate();
 	}
