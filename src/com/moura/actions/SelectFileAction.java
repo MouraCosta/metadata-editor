@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.FileDialog;
 import java.io.File;
-import java.lang.reflect.Field;
 
 import javax.swing.JFileChooser;
 
@@ -46,11 +45,15 @@ public class SelectFileAction implements ActionListener {
 				// There's a file on working. Clean it.
 				app.metadataFields.clean();
 			}
+
+			// Load the metadata
 			File selectedFile = fileChooser.getFiles()[0];
 			app.onChange = selectedFile;
 			app.fileSelected = true;
+			app.setTitle("Loading");
 			app.metadataFields.setupFields(metadataEditor.getMetadata(selectedFile));
 			app.filenameIconLabel.setThumbnail(selectedFile);
+			app.setTitle("Metadata Editor");
 		}
 	}
 }
