@@ -22,7 +22,8 @@ public class MetadataEditor {
 	* @return A map containing the metadata of the file. The result is null if
 	* the file doesn't exist.
 	*/
-	public Map<String, String> getMetadata(File file) {
+	//FIXME: Exception is too general.
+	public Map<String, String> getMetadata(File file) throws Exception {
 		if (file.exists()) {
 			// Start the process of getting metadata.
 			Map<String, String> metadata = memoisationTable.get(file);
@@ -54,7 +55,8 @@ public class MetadataEditor {
 	 * be changed.
 	 * @return True when the metadata
 	 */
-	public boolean setMetadata(File file, Map<String, String> newMetadata) {
+	//FIXME: Exception is too general.
+	public boolean setMetadata(File file, Map<String, String> newMetadata) throws Exception {
 		// TODO: Test this code and reinforce it, too much atomic
 		if (! file.exists()) {
 			return false;

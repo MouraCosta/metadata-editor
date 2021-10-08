@@ -6,6 +6,7 @@ import java.awt.FileDialog;
 import java.io.File;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import com.moura.Application;
 import com.moura.MetadataEditor;
@@ -51,9 +52,17 @@ public class SelectFileAction implements ActionListener {
 			app.onChange = selectedFile;
 			app.fileSelected = true;
 			app.setTitle("Loading");
-			app.metadataFields.setupFields(metadataEditor.getMetadata(selectedFile));
+			try {
+				app.metadataFields.setupFields(metadataEditor.getMetadata(selectedFile));
+			} catch (Exception err) {
+				// Happens when the user doesn't have exiftool installed.
+				JOptionPane.showMessageDialog(app, "Looks like you do not have exiftool"
+				+ "installed. exiftool is necessary to utilise this program");
+				app.setTitle("Metadata Editor");
+				app.fileSelected = false;
+				return;
+			}
 			app.filenameIconLabel.setThumbnail(selectedFile);
-			app.setTitle("Metadata Editor");
 		}
 	}
 }

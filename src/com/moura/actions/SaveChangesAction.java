@@ -36,10 +36,15 @@ public class SaveChangesAction implements ActionListener {
 			if (confirmationCode == 0) {
 				// The user really wants to save his changes.
 				Map<String, String> newMetadata = app.metadataFields.getMetadata();
-				if (metadataEditor.setMetadata(app.onChange, newMetadata)) {
-					JOptionPane.showMessageDialog(app, "Metadata changed successfully.");
-				} else {
-					JOptionPane.showMessageDialog(app, "An error occurred.");
+				try {
+					if (metadataEditor.setMetadata(app.onChange, newMetadata)) {
+						JOptionPane.showMessageDialog(app, "Metadata changed successfully.");
+					} else {
+						JOptionPane.showMessageDialog(app, "An error occurred.");
+					}
+				} catch (Exception err) {
+					JOptionPane.showMessageDialog(app, "It's not possible to set metadata without"
+					 +"exiftool.");
 				}
 			}
 		} else {
