@@ -58,10 +58,10 @@ public class SelectFileAction implements ActionListener {
 				// Happens when the user doesn't have exiftool installed.
 				JOptionPane.showMessageDialog(app, "Looks like you do not have exiftool"
 				+ "installed. exiftool is necessary to utilise this program");
-				app.setTitle("Metadata Editor");
 				app.fileSelected = false;
 				return;
 			}
+			app.setTitle("Metadata Editor");
 			app.filenameIconLabel.setThumbnail(selectedFile);
 		}
 	}
