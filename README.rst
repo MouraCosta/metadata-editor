@@ -10,9 +10,9 @@ Description
 ---------------------
 
 MetadataEditor is app written in Java that is responsible for reading and
-changing metadata with a very simple GUI. This is the GUI implementation only
-using Java Swing, the real processing is made by the exiftool_, a tool written
-Pearl.
+changing metadata on Unix environments with a very simple GUI. This is the GUI
+implementation only using Java Swing, the real processing is made by the
+exiftool_, a tool written Perl.
 
 .. _exiftool: https://github.com/exiftool/exiftool
 
@@ -34,9 +34,3 @@ go to the project folder and run (use sudo of course)::
     ./install
 
 And done, the application is already installed and ready to go.
-
-Working Systems
-===============
-
-* Linux (or any Unix-like systems may work properly)
-* Windows (In development)
