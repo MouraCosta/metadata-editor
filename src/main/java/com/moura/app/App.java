@@ -1,15 +1,17 @@
+package com.moura.app;
+
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 
 import com.moura.Application;
 
 /**
- * Main.
- * @author de Moura
+ * Hello world!
+ *
  */
-public class MetadataEditor {
+public class App {
 
-	static final Logger LOGGER = Logger.getLogger("MetadataEditor");
+    static final Logger LOGGER = Logger.getLogger("MetadataEditor");
 
 	public static Application app;
 
@@ -23,9 +25,9 @@ public class MetadataEditor {
 		app = new Application();
 	}
 
-	public static void main(String[] args) {
-		app.start();
+    public static void main( String[] args ) {
+        app.start();
 		LOGGER.info("Application Started");
 		System.getProperties().forEach((x, y) -> System.out.println(x+":"+y));
-	}
+    }
 }

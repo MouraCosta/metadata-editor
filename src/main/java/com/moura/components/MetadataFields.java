@@ -2,10 +2,7 @@ package com.moura.components;
 
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +18,7 @@ import com.moura.Application;
  * A class responsible for showing the user all the fields that a file contains.
  */
 public class MetadataFields {
-	
+
 	private Map<String, JComponent[]> fields = new HashMap<>();
 	private JPanel fieldsPanel = new JPanel();
 	private JScrollPane mainPane = new JScrollPane(fieldsPanel);
@@ -43,12 +40,12 @@ public class MetadataFields {
 	 * @param metadata Map of strings containing all the fields and its values.
 	 */
 	public void setupFields(Map<String, String> metadata) {
-		for (Map.Entry<String, String> keyValue: metadata.entrySet()) {
+		for (Map.Entry<String, String> keyValue : metadata.entrySet()) {
 			JLabel currentLabel = new JLabel(keyValue.getKey());
 			JTextField currentTextField = new JTextField(keyValue.getValue());
 			fieldsPanel.add(currentLabel);
 			fieldsPanel.add(currentTextField);
-			fields.put(keyValue.getKey(), new JComponent[] {currentLabel, currentTextField});
+			fields.put(keyValue.getKey(), new JComponent[] { currentLabel, currentTextField });
 		}
 		fieldsPanel.revalidate();
 	}
@@ -67,11 +64,11 @@ public class MetadataFields {
 	/**
 	 * Adds a new field to the component.
 	 * 
-	 * @param key A String representing the field.
+	 * @param key   A String representing the field.
 	 * @param value A String representing the value of the field.
 	 * 
 	 * @return True when it was possible to add this new field. False when this
-	 * field already exists.
+	 *         field already exists.
 	 */
 	public boolean addField(String key, String value) {
 		if (fields.get(key) == null) {
@@ -80,7 +77,7 @@ public class MetadataFields {
 			fieldsPanel.add(label);
 			fieldsPanel.add(textField);
 			fieldsPanel.revalidate();
-			fields.put(key, new JComponent[] {label, textField});
+			fields.put(key, new JComponent[] { label, textField });
 			return true;
 		}
 		return false;
@@ -106,7 +103,7 @@ public class MetadataFields {
 	 * List<String> object.
 	 * 
 	 * @param metadataKeys A List<String> object that contains all the
-	 * keys to their respective fields.
+	 *                     keys to their respective fields.
 	 */
 	public void remove(List<String> metadataKeys) {
 		metadataKeys.forEach((key) -> {

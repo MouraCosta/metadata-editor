@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.FileDialog;
 import java.io.File;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import com.moura.Application;
@@ -53,7 +52,7 @@ public class SelectFileAction implements ActionListener {
 			app.fileSelected = true;
 			app.setTitle("Loading");
 			try {
-				app.metadataFields.setupFields(metadataEditor.getMetadata(selectedFile));
+				app.metadataFields.setupFields(metadataEditor.getNeededMetadata(selectedFile));
 			} catch (Exception err) {
 				// Happens when the user doesn't have exiftool installed.
 				JOptionPane.showMessageDialog(app, "Looks like you do not have exiftool"
