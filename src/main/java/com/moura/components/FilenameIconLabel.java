@@ -1,17 +1,14 @@
 package com.moura.components;
 
-import java.awt.Image;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.File;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileSystemView;
 
 // TODO: Find a way to load system icons
 /**
