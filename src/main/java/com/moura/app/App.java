@@ -6,7 +6,7 @@ import javax.swing.UIManager;
 import com.moura.Application;
 
 /**
- * Hello world!
+ * App entry.
  *
  */
 public class App {
@@ -28,6 +28,5 @@ public class App {
     public static void main( String[] args ) {
         app.start();
 		LOGGER.info("Application Started");
-		System.getProperties().forEach((x, y) -> System.out.println(x+":"+y));
     }
 }
