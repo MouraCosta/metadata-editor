@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
-import com.moura.Application;
+import com.moura.app.App;
 import com.moura.components.DeleteFieldDialog;
 
 /**
@@ -14,7 +14,7 @@ import com.moura.components.DeleteFieldDialog;
  */
 public class DeleteFieldAction implements ActionListener {
 
-    Application app;
+    App app;
     DeleteFieldDialog dialog;
 
     /**
@@ -22,7 +22,7 @@ public class DeleteFieldAction implements ActionListener {
      * 
      * @param app An Application object representing the app view.
      */
-    public DeleteFieldAction(Application app) {
+    public DeleteFieldAction(App app) {
         this.app = app;
         dialog = new DeleteFieldDialog(app);
     }

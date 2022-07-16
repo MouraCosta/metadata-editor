@@ -5,14 +5,14 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
-import com.moura.Application;
+import com.moura.app.App;
 import com.moura.MetadataEditor;
 
 /**
  * Class responsible for saving the changes the user does in the metadata fields.
  * @author de Moura*/
 public class SaveChangesAction implements ActionListener {
-	Application app;
+	App app;
 	MetadataEditor metadataEditor;
 
 	/**
@@ -22,7 +22,7 @@ public class SaveChangesAction implements ActionListener {
 	 * @param metadataEditor A MetadataEditor object that is responsible for
 	 * actually doing what the programme should do
 	 */
-	public SaveChangesAction(Application app, MetadataEditor metadataEditor) {
+	public SaveChangesAction(App app, MetadataEditor metadataEditor) {
 		this.app = app;
 		this.metadataEditor = metadataEditor;
 	}

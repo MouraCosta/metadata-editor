@@ -7,7 +7,7 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-import com.moura.Application;
+import com.moura.app.App;
 import com.moura.MetadataEditor;
 
 /**
@@ -17,7 +17,7 @@ import com.moura.MetadataEditor;
  */
 public class SelectFileAction implements ActionListener {
 
-	Application app;
+	App app;
 	MetadataEditor metadataEditor;
 	FileDialog fileChooser;
 
@@ -28,7 +28,7 @@ public class SelectFileAction implements ActionListener {
 	 * @param metadataEditor A MetadataEditor object responsible for doing the
 	 * whole app processing.
 	 */
-	public SelectFileAction(Application app, MetadataEditor metadataEditor) {
+	public SelectFileAction(App app, MetadataEditor metadataEditor) {
 		this.app = app;
 		this.metadataEditor = metadataEditor;
 		this.fileChooser = new FileDialog(app, "Open File");

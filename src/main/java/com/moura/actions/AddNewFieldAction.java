@@ -4,15 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
-import com.moura.Application;
+import com.moura.app.App;
 import com.moura.components.NewFieldDialog;
 
 public class AddNewFieldAction implements ActionListener {
 
-	Application appView;
+	App appView;
 	NewFieldDialog dialog;
 
-	public AddNewFieldAction(Application appView) {
+	public AddNewFieldAction(App appView) {
 		this.appView = appView;
 		dialog = new NewFieldDialog(appView);
 	}

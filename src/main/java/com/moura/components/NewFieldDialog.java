@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.moura.Application;
+import com.moura.app.App;
 /**
  * JDialog child that contains an already setting for the components and how it
  * should work.
@@ -27,7 +27,7 @@ import com.moura.Application;
  */
 public class NewFieldDialog extends JDialog {
 
-	private Application appView;
+	private App appView;
 	private Dimension dialogDimension = new Dimension(424, 112);
 	private String initialFieldMessage = "Put your field here";
 	private String initialValueMessage = "Put your value here";
@@ -42,7 +42,7 @@ public class NewFieldDialog extends JDialog {
 	 * The default constructor for this class.
 	 * @param appView is the instance of the JFrame child, Application.
 	 */
-	public NewFieldDialog(Application appView) {
+	public NewFieldDialog(App appView) {
 		super(appView);
 		this.appView = appView;
 		setTitle("Add a new field");

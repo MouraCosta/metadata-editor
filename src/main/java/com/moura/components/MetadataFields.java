@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import com.moura.Application;
+import com.moura.app.App;
 
 /**
  * A class responsible for showing the user all the fields that a file contains.
@@ -22,14 +22,14 @@ public class MetadataFields {
 	private Map<String, JComponent[]> fields = new HashMap<>();
 	private JPanel fieldsPanel = new JPanel();
 	private JScrollPane mainPane = new JScrollPane(fieldsPanel);
-	private Application app;
+	private App app;
 
 	/**
 	 * The default class constructor.
 	 * 
 	 * @param app The Application object representing the main view.
 	 */
-	public MetadataFields(Application app) {
+	public MetadataFields(App app) {
 		fieldsPanel.setLayout(new GridLayout(0, 1));
 		this.app = app;
 	}

@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.moura.Application;
+import com.moura.app.App;
 
 /**
  * Class responsible for showing the user a interface to delete the
@@ -26,7 +26,7 @@ import com.moura.Application;
  */
 public class DeleteFieldDialog extends JDialog {
 
-    Application app;
+    App app;
     Map<String, JCheckBox> fields = new HashMap<>();
 
     // Dialog Components
@@ -34,7 +34,7 @@ public class DeleteFieldDialog extends JDialog {
     JButton deleteButton = new JButton("Delete");
     JScrollPane scrollPane = new JScrollPane(fieldsPanel);
 
-    public DeleteFieldDialog(Application app) {
+    public DeleteFieldDialog(App app) {
         super(app);
         this.app = app;
         setSize(600, 400);
