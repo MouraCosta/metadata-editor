@@ -24,6 +24,8 @@ public class MetadataEditor {
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	private Map<File, Map<String, String>> memoisationTable = new HashMap<>();
 
+	public MetadataEditor() { }
+
 	/**
 	 * Retrieve the metadata from a given file.
 	 * 
