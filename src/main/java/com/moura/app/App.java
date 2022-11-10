@@ -1,6 +1,5 @@
 package com.moura.app;
 
-import com.moura.components.MetadataFields;
 import com.moura.ui.UILoader;
 
 import javafx.application.Application;
@@ -16,11 +15,10 @@ import javafx.stage.Stage;
  * @author de Moura
  */
 public class App extends Application {
-	public MetadataFields metadataFields = new MetadataFields();
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(UILoader.load("main.fxml"));
+		Parent root = FXMLLoader.load(this.getClass().getResource("/views/main.fxml"));
 		Scene scene = new Scene(root, 600, 400);
 
 		primaryStage.setScene(scene);
