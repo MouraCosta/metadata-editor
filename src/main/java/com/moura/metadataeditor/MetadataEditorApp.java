@@ -1,4 +1,4 @@
-package com.moura.app;
+package com.moura.metadataeditor;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  * 
  * @author de Moura
  */
-public class App extends Application {
+public class MetadataEditorApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {

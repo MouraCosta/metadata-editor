@@ -1,4 +1,4 @@
-package com.moura.components;
+package com.moura.metadataeditor.components;
 
 import java.util.HashMap;
 import java.util.List;

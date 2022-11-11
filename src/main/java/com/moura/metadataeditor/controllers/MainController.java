@@ -1,10 +1,10 @@
-package com.moura.controllers;
+package com.moura.metadataeditor.controllers;
 
 import java.io.File;
 import java.util.Map;
 
-import com.moura.MetadataEditor;
-import com.moura.components.MetadataFields;
+import com.moura.metadataeditor.MetadataEditor;
+import com.moura.metadataeditor.components.MetadataFields;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
