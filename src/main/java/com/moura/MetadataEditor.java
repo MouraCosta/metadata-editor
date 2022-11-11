@@ -1,6 +1,7 @@
 package com.moura;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,15 +17,13 @@ import java.util.logging.Logger;
  */
 public class MetadataEditor {
 
-	private final List<String> commonKeys = Arrays.asList(
+	private static List<String> commonKeys = Arrays.asList(
 			"ExifTool Version Number", "File Inode Change Date/Time", "File Type",
-			"File Modification Date/Time", "MIME Type", "File Size", "File Permissions", "Directory",
-			"File Name", "File Access Date/Time");
+			"File Modification Date/Time", "MIME Type", "File Size", "File Permissions",
+			"Directory", "File Name", "File Access Date/Time");
 
-	private Logger logger = Logger.getLogger(this.getClass().getName());
-	private Map<File, Map<String, String>> memoisationTable = new HashMap<>();
-
-	public MetadataEditor() { }
+	private static Logger logger = Logger.getLogger(MetadataEditor.class.getName());
+	private static Map<File, Map<String, String>> memoisationTable = new HashMap<>();
 
 	/**
 	 * Retrieve the metadata from a given file.
@@ -32,8 +31,7 @@ public class MetadataEditor {
 	 * @return A map containing the metadata of the file. The result is null if
 	 *         the file doesn't exist.
 	 */
-	// FIXME: Exception is too general.
-	public Map<String, String> getMetadata(File file) throws Exception {
+	public static Map<String, String> getMetadata(File file) {
 		if (file.exists()) {
 			// Start the process of getting metadata.
 			Map<String, String> metadata = memoisationTable.get(file);
@@ -41,9 +39,12 @@ public class MetadataEditor {
 				return metadata;
 			} else {
 				// File isn't in the memoisation table. Query the metadata.
-				String output = getOutput(file);
-				String[] fieldsAndValues = output.split("\n");
 				metadata = new HashMap<>();
+				String output = getOutput(file);
+				if (output == null) {
+					return metadata;
+				}
+				String[] fieldsAndValues = output.split("\n");
 				for (String fieldAndValue : fieldsAndValues) {
 					String[] current = fieldAndValue.split(":");
 					current[0] = current[0].strip();
@@ -59,7 +60,7 @@ public class MetadataEditor {
 		}
 	}
 
-	public Map<String, String> getNeededMetadata(File file) throws Exception {
+	public static Map<String, String> getNeededMetadata(File file) {
 		Map<String, String> fileMetadata = getMetadata(file);
 		for (String commonKey : commonKeys) {
 			fileMetadata.remove(commonKey);
@@ -73,14 +74,13 @@ public class MetadataEditor {
 	 * 
 	 * @param newMetadata A map containing all the metadata fields that needs to
 	 *                    be changed.
-	 * @return True when the metadata
+	 * @return True when the metadata is successfully set, otherwise false.
 	 */
-	// FIXME: Exception is too general.
-	public boolean setMetadata(File file, Map<String, String> newMetadata) throws Exception {
-		// TODO: Test this code and reinforce it, too much atomic
+	public static boolean setMetadata(File file, Map<String, String> newMetadata) {
 		if (!file.exists()) {
 			return false;
 		}
+
 		List<String> command = new ArrayList<>();
 		command.add("exiftool");
 		Set<String> keys = newMetadata.keySet();
@@ -89,24 +89,26 @@ public class MetadataEditor {
 		}
 		command.add(file.getAbsolutePath());
 		logger.info(command.toString());
+
 		try {
 			new ProcessBuilder(command).start();
-		} catch (Exception err) {
-			err.printStackTrace();
+		} catch (IOException err) {
+			logger.warning(err.getMessage());
+			return false;
 		}
 		return true;
 	}
 
-	private String createTag(String tagName, String tagValue) {
+	private static String createTag(String tagName, String tagValue) {
 		return String.format("-%s=%s", tagName, tagValue);
 	}
 
-	private String getOutput(File file) {
+	private static String getOutput(File file) {
 		try {
 			Process p = new ProcessBuilder("exiftool", file.getAbsolutePath()).start();
 			String output = new String(p.getInputStream().readAllBytes());
 			return output;
-		} catch (Exception err) {
+		} catch (IOException err) {
 			return null;
 		}
 	}

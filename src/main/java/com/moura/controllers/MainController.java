@@ -18,13 +18,11 @@ import javafx.stage.FileChooser;
  * @author De Moura
  */
 public class MainController {
-    
+
     @FXML Label fileLabel = new Label();
     @FXML Button openButton = new Button();
     @FXML Button saveButton = new Button();
     @FXML MetadataFields metadataFields = new MetadataFields();
-
-    MetadataEditor metadataEditor = new MetadataEditor();
 
     /**
      * Opens a file chooser and reads and writes the selected file's metadata
@@ -38,22 +36,22 @@ public class MainController {
             return;
         }
 
-        Map<String, String> metadata = null;
-        try {
-            metadata = metadataEditor.getMetadata(file);
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
+        Map<String, String> metadata = MetadataEditor.getMetadata(file);
 
         String creationDateString = metadata.get("Creation Date");
         String fileType = metadata.get("File Type");
+
+        creationDateString = creationDateString == null? "Unknown":creationDateString;
+        fileType = fileType == null? "Unknown": fileType;
+
         String labelOutput = String.format("Filename: %s\nCreation Date: %s\nFile Type: %s",
             file.getName(), creationDateString, fileType);
-        try {
-            metadataFields.setupFields(metadataEditor.getNeededMetadata(file));
-            fileLabel.setText(labelOutput);
-        } catch (Exception err) {
-            err.printStackTrace();
+        fileLabel.setText(labelOutput);
+
+        if (!metadata.isEmpty()) {
+            metadataFields.setupFields(MetadataEditor.getNeededMetadata(file));
+        } else {
+            // Shows a dialog informing that it's not possible to acquire data without exiftool.
         }
     }
 
