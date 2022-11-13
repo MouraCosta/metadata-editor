@@ -11,6 +11,7 @@ module com.moura.metadataeditor {
     // Resources
     opens images;
     opens views;
+    opens utils;
 
     exports com.moura.metadataeditor;
 }
