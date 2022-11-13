@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Metadata Editor
+Exec="/opt/metadata-editor/bin/Metadata Editor"
+Icon=/opt/metadata-editor/lib/Metadata_Editor.png
+StartupWMClass=com.moura.metadataeditor.MetadataEditorApp
+Comment="Simple GUI for exiftool"
+Terminal=false
+Type=Application
+Categories=Programming
