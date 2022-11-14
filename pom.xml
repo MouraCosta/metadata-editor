@@ -6,7 +6,7 @@
 
   <groupId>com.moura.app</groupId>
   <artifactId>java-metadata-editor</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>2.0</version>
 
   <name>java-metadata-editor</name>
   <!-- FIXME change it to the project's website -->
@@ -30,7 +30,6 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <scope>compile</scope>
       <version>17.0.2</version>
     </dependency>
 
@@ -65,6 +64,13 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>com.moura.metadataeditor/com.moura.metadataeditor.MetadataEditorApp</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -88,7 +94,31 @@
         <plugin>
           <groupId>org.openjfx</groupId>
           <artifactId>javafx-maven-plugin</artifactId>
+          <configuration>
+            <stripDebug>true</stripDebug>
+            <compress>2</compress>
+            <launcher>metadata-editor</launcher>
+            <jlinkImageName>metadata-editor</jlinkImageName>
+            <mainClass>com.moura.metadataeditor/com.moura.metadataeditor.MetadataEditorApp</mainClass>
+          </configuration>
           <version>0.0.8</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.panteleyev</groupId>
+          <artifactId>jpackage-maven-plugin</artifactId>
+          <version>1.6.0</version>
+          <configuration>
+            <name>Metadata Editor</name>
+            <appVersion>2.0</appVersion>
+            <vendor>De Moura</vendor>
+            <destination>target/dist</destination>
+            <module>com.moura.metadataeditor/com.moura.metadataeditor.MetadataEditorApp</module>
+            <runtimeImage>target/metadata-editor</runtimeImage>
+            <linuxShortcut>true</linuxShortcut>
+            <icon>target/classes/images/icon.png</icon>
+            <resourceDir>target/classes/utils</resourceDir>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
