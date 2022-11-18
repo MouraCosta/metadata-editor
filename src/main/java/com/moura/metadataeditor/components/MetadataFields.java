@@ -4,40 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
-/**
- * MetadataField is a class that represents a single entry. It's heavily
- * associated with the MetadataFields class, as this latter class groups several
- * MetadataField objects into a scrollable pane.
- */
-class MetadataField extends GridPane {
-
-	private Label fieldLabel;
-	private TextField fTextField = new TextField();
-
-	public MetadataField(String fieldName) {
-		super();
-		fieldLabel = new Label(fieldName);
-		setHgap(10);
-
-		add(fieldLabel, 0, 0);
-		add(fTextField, 0, 1);
-	}
-
-	public MetadataField(String fieldName, String value) {
-		this(fieldName);
-		fTextField.setText(value);
-	}
-
-	public String getText() {
-		return fTextField.getText();
-	}
-}
 
 /**
  * A class responsible for showing the user all the fields that a file contains.
@@ -51,6 +19,8 @@ public class MetadataFields extends ScrollPane {
 
 	public MetadataFields() {
 		super();
+		setHbarPolicy(ScrollBarPolicy.NEVER);
+		setFitToWidth(true);
 		this.setContent(fieldsPanel);
 	}
 
