@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -23,37 +22,32 @@ public class MetadataEditor {
 			"Directory", "File Name", "File Access Date/Time");
 
 	private static Logger logger = Logger.getLogger(MetadataEditor.class.getName());
-	private static Map<File, Map<String, String>> memoisationTable = new HashMap<>();
 
 	/**
-	 * Retrieve the metadata from a given file.
+	 * It retrieves the file metadata using the system installed ExifTool.
 	 * 
 	 * @return A map containing the metadata of the file. The result is null if
-	 *         the file doesn't exist.
+	 *         the file doesn't exist. Also, it may return an empty map if
+	 *         ExifTool isn't present in the host's system.
+	 * @throws IOException
 	 */
 	public static Map<String, String> getMetadata(File file) {
 		if (file.exists()) {
 			// Start the process of getting metadata.
-			Map<String, String> metadata = memoisationTable.get(file);
-			if (metadata != null) {
-				return metadata;
-			} else {
-				// File isn't in the memoisation table. Query the metadata.
-				metadata = new HashMap<>();
-				String output = getOutput(file);
-				if (output == null) {
-					return metadata;
-				}
-				String[] fieldsAndValues = output.split("\n");
-				for (String fieldAndValue : fieldsAndValues) {
-					String[] current = fieldAndValue.split(":");
-					current[0] = current[0].strip();
-					current[1] = current[1].strip();
-					metadata.put(current[0], current[1]);
-				}
-				memoisationTable.put(file, metadata);
+			Map<String, String> metadata = new HashMap<>();
+			String output = getOutput(file);
+			if (output == null) {
+				// Returns an empty hash map if exiftool isn't installed.
 				return metadata;
 			}
+			String[] fieldsAndValues = output.split("\n");
+			for (String fieldAndValue : fieldsAndValues) {
+				String[] current = fieldAndValue.split(":");
+				current[0] = current[0].strip();
+				current[1] = current[1].strip();
+				metadata.put(current[0], current[1]);
+			}
+			return metadata;
 		} else {
 			// The file doesn't exist, so just return null.
 			return null;
@@ -83,16 +77,21 @@ public class MetadataEditor {
 
 		List<String> command = new ArrayList<>();
 		command.add("exiftool");
-		Set<String> keys = newMetadata.keySet();
-		for (String key : keys) {
-			command.add(createTag(key.replaceAll(" ", ""), newMetadata.get(key)));
-		}
+		newMetadata.forEach((key, value) -> {
+			if (value != "" && !value.equals(getMetadata(file).get(key))) {
+				command.add(createTag(key.replaceAll(" ", ""), value));
+			}
+		});
 		command.add(file.getAbsolutePath());
 		logger.info(command.toString());
 
 		try {
-			new ProcessBuilder(command).start();
-		} catch (IOException err) {
+			Process proc = new ProcessBuilder(command).start();
+			proc.waitFor();
+			if (proc.exitValue() == 1) {
+				return false;
+			}
+		} catch (IOException | InterruptedException err) {
 			logger.warning(err.getMessage());
 			return false;
 		}
