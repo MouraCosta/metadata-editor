@@ -7,8 +7,10 @@ import com.moura.metadataeditor.MetadataEditor;
 import com.moura.metadataeditor.components.MetadataFields;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -30,6 +32,8 @@ public class MainController {
     Button saveButton = new Button();
     @FXML
     MetadataFields metadataFields = new MetadataFields();
+
+    private File workingFile;
 
     /**
      * It checks if the data over the node is a file. If yes, then it'll allow
@@ -83,7 +87,21 @@ public class MainController {
      * Save any modification made to the selected file's metadata.
      */
     public void saveButtonClick() {
-        System.out.println("I'm amazing");
+        if (workingFile != null) {
+            if (!MetadataEditor.setMetadata(workingFile, metadataFields.getMetadata())) {
+                Alert errorDialog = new Alert(AlertType.ERROR);
+                errorDialog.setHeaderText("Something went wrong!");
+                errorDialog.setContentText("Looks like something went wrong with "
+                    + "ExifTool. Either the given arguments are wrong or the operation with this "
+                    + "file type is unsupported.");
+                errorDialog.show();
+            }
+        } else {
+            Alert alertDialog = new Alert(AlertType.INFORMATION);
+            alertDialog.setContentText("First select a file before trying to save "
+                + "anything.");
+            alertDialog.show();
+        }
     }
 
     /**
@@ -92,23 +110,27 @@ public class MainController {
      * @param file is from which the metadata will be got from.
      */
     public void setup(File file) {
-        Map<String, String> metadata = MetadataEditor.getMetadata(file);
+        Map<String, String> metadata;
+        metadata = MetadataEditor.getMetadata(file);
 
-        String creationDateString = metadata.get("Creation Date");
-        String fileType = metadata.get("File Type");
-
-        creationDateString = creationDateString == null ? "Unknown" : creationDateString;
-        fileType = fileType == null ? "Unknown" : fileType;
-
-        String labelOutput = String.format("Filename: %s\nCreation Date: %s\nFile Type: %s",
-                file.getName(), creationDateString, fileType);
-        fileLabel.setText(labelOutput);
-
-        if (!metadata.isEmpty()) {
-            metadataFields.setupFields(MetadataEditor.getNeededMetadata(file));
+        if (metadata.isEmpty()) {
+            Alert alertDialog = new Alert(AlertType.ERROR);
+            alertDialog.setContentText("You don't have exiftool installed in your "
+                + "system.");
+            alertDialog.show();
         } else {
-            // Shows a dialog informing that it's not possible to acquire data without
-            // exiftool.
+            String creationDateString = metadata.get("Creation Date");
+            String fileType = metadata.get("File Type");
+
+            creationDateString = creationDateString == null ? "Unknown" : creationDateString;
+            fileType = fileType == null ? "Unknown" : fileType;
+
+            String labelOutput = String.format("Filename: %s\nCreation Date: %s\nFile Type: %s",
+                    file.getName(), creationDateString, fileType);
+            fileLabel.setText(labelOutput);
+            
+            metadataFields.setupFields(MetadataEditor.getNeededMetadata(file));
+            workingFile = file;
         }
     }
 }
