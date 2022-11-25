@@ -38,6 +38,12 @@
       <artifactId>javafx-fxml</artifactId>
       <version>17.0.2</version>
     </dependency>
+
+    <dependency>
+	    <groupId>nz.co.rossphillips</groupId>
+	    <artifactId>scala-thumbnailer</artifactId>
+	    <version>0.4.0</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -123,4 +129,21 @@
       </plugins>
     </pluginManagement>
   </build>
+
+
+  <dependencyManagement>
+  
+
+    <dependencies>
+    
+
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>2.10.0</version>
+      </dependency>
+
+    </dependencies>
+
+  </dependencyManagement>
 </project>

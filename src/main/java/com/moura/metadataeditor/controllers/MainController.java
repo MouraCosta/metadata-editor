@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Map;
 
 import com.moura.metadataeditor.MetadataEditor;
+import com.moura.metadataeditor.ThumbnailLoader;
 import com.moura.metadataeditor.components.MetadataFields;
 
 import javafx.fxml.FXML;
@@ -11,6 +12,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -26,6 +29,8 @@ public class MainController {
 
     @FXML
     Label fileLabel = new Label();
+    @FXML
+    ImageView fileThumbnail = new ImageView();
     @FXML
     Button openButton = new Button();
     @FXML
@@ -130,6 +135,12 @@ public class MainController {
             fileLabel.setText(labelOutput);
             
             metadataFields.setupFields(MetadataEditor.getNeededMetadata(file));
+            Image thumbnailImage = ThumbnailLoader.generateThumbnail(file);
+            if (thumbnailImage != null) {
+                fileThumbnail.setImage(thumbnailImage);
+            } else {
+                fileThumbnail.setImage(new Image(this.getClass().getResourceAsStream("/images/no_file.png")));
+            }
             workingFile = file;
         }
     }
