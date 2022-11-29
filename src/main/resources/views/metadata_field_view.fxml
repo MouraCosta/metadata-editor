@@ -6,7 +6,7 @@
 
 <fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="fieldname" layoutY="6.0" prefHeight="16.0" prefWidth="600.0" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <TextField fx:id="fieldinfo" layoutY="20.0" prefHeight="24.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Label fx:id="fieldname" layoutY="6.0" prefHeight="16.0" prefWidth="600.0" stylesheets="@../stylesheets/metadata_view.css" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <TextField fx:id="fieldinfo" layoutY="22.0" prefHeight="24.0" prefWidth="600.0" stylesheets="@../stylesheets/metadata_view.css" text="wsssss" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </fx:root>

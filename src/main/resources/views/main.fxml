@@ -42,17 +42,17 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.moura.metadataeditor.controllers.MainController">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane fx:id="mainPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@../stylesheets/main.css" VBox.vgrow="ALWAYS">
       <children>
-            <Button fx:id="saveButton" layoutX="320.0" layoutY="350.0" mnemonicParsing="false" onAction="#saveButtonClick" prefHeight="36.0" prefWidth="119.0" text="Save" textAlignment="CENTER" AnchorPane.bottomAnchor="14.0" />
-            <Label fx:id="fileLabel" alignment="TOP_LEFT" layoutX="131.0" layoutY="49.0" prefHeight="84.0" prefWidth="469.0" text="No file selected" wrapText="true" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="40.0" />
+            <Button fx:id="saveButton" layoutX="320.0" layoutY="350.0" mnemonicParsing="false" onAction="#saveButtonClick" prefHeight="36.0" prefWidth="119.0" stylesheets="@/stylesheets/main.css" text="Save" textAlignment="CENTER" AnchorPane.bottomAnchor="14.0" />
+            <Label fx:id="fileLabel" alignment="TOP_LEFT" layoutX="131.0" layoutY="49.0" prefHeight="84.0" prefWidth="469.0" stylesheets="@/stylesheets/main.css" text="No file selected" textFill="#e7f6f2" wrapText="true" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="40.0" />
             <ImageView fx:id="fileThumbnail" fitHeight="98.0" fitWidth="80.0" layoutX="44.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="35.0">
                <image>
                   <Image url="@/images/no_file.png" />
                </image>
             </ImageView>
-            <Button fx:id="openButton" layoutX="178.0" layoutY="350.0" mnemonicParsing="false" onAction="#openButtonClick" prefHeight="36.0" prefWidth="113.0" text="Open" AnchorPane.bottomAnchor="14.0" />
-            <MetadataFields fx:id="metadataFields" fitToHeight="true" layoutX="44.0" layoutY="144.0" maxHeight="1.7976931348623157E308" maxWidth="450.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="167.0" prefWidth="391.0" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="205.0" AnchorPane.topAnchor="144.0" />
+            <Button fx:id="openButton" layoutX="178.0" layoutY="350.0" mnemonicParsing="false" onAction="#openButtonClick" prefHeight="36.0" prefWidth="113.0" stylesheets="@/stylesheets/main.css" text="Open" AnchorPane.bottomAnchor="14.0" />
+            <MetadataFields fx:id="metadataFields" fitToHeight="true" layoutX="44.0" layoutY="144.0" maxHeight="1.7976931348623157E308" maxWidth="450.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="167.0" prefWidth="391.0" stylesheets="@/stylesheets/main.css" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="205.0" AnchorPane.topAnchor="144.0" />
       </children>
     </AnchorPane>
   </children>

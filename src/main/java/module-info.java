@@ -25,6 +25,7 @@ module com.moura.metadataeditor {
     opens images;
     opens views;
     opens utils;
+    opens stylesheets;
 
     exports com.moura.metadataeditor;
 }

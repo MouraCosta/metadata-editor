@@ -1,0 +1,16 @@
+.button{
+    -fx-background-color: #A5C9CA;
+    -fx-border-color: #E7F6F2;
+}
+
+.label{
+    -fx-text-fill: #E7F6F2;
+}
+
+.fields-panel{
+    -fx-background-color: #395B64;
+}
+
+#mainPane{
+    -fx-background-color: #2C3333
+}

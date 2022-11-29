@@ -1,0 +1,8 @@
+.label{
+    -fx-text-fill: #E7F6F2;
+}
+
+.text-field{
+    -fx-background-color: #2C3333;
+    -fx-text-fill: #E7F6F2;
+}
