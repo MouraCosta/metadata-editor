@@ -97,14 +97,14 @@ public class MainController {
                 Alert errorDialog = new Alert(AlertType.ERROR);
                 errorDialog.setHeaderText("Something went wrong!");
                 errorDialog.setContentText("Looks like something went wrong with "
-                    + "ExifTool. Either the given arguments are wrong or the operation with this "
-                    + "file type is unsupported.");
+                        + "ExifTool. Either the given arguments are wrong or the operation with this "
+                        + "file type is unsupported.");
                 errorDialog.show();
             }
         } else {
             Alert alertDialog = new Alert(AlertType.INFORMATION);
             alertDialog.setContentText("First select a file before trying to save "
-                + "anything.");
+                    + "anything.");
             alertDialog.show();
         }
     }
@@ -121,7 +121,7 @@ public class MainController {
         if (metadata.isEmpty()) {
             Alert alertDialog = new Alert(AlertType.ERROR);
             alertDialog.setContentText("You don't have exiftool installed in your "
-                + "system.");
+                    + "system.");
             alertDialog.show();
         } else {
             String creationDateString = metadata.get("Creation Date");
@@ -133,7 +133,7 @@ public class MainController {
             String labelOutput = String.format("Filename: %s\nCreation Date: %s\nFile Type: %s",
                     file.getName(), creationDateString, fileType);
             fileLabel.setText(labelOutput);
-            
+
             metadataFields.setupFields(MetadataEditor.getNeededMetadata(file));
             Image thumbnailImage = ThumbnailLoader.generateThumbnail(file);
             if (thumbnailImage != null) {

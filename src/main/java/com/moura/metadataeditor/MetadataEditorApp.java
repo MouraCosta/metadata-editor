@@ -19,7 +19,7 @@ public class MetadataEditorApp extends Application {
 		Parent root = FXMLLoader.load(this.getClass().getResource("/views/main.fxml"));
 		Scene scene = new Scene(root, 600, 400);
 		primaryStage.getIcons().add(new Image(
-			this.getClass().getResourceAsStream("/images/icon.png")));
+				this.getClass().getResourceAsStream("/images/icon.png")));
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Metadata Editor");
 		primaryStage.setMinWidth(640);
