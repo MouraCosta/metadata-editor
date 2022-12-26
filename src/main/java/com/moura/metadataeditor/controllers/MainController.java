@@ -20,8 +20,7 @@ import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 
 /**
- * Class responsible for responding to user actions in the main view of the
- * application.
+ * Class that sends responses to each user request in the main view.
  * 
  * @author De Moura
  */
@@ -44,8 +43,8 @@ public class MainController {
      * It checks if the data over the node is a file. If yes, then it'll allow
      * the data to be read by the node.
      * 
-     * @param event is the default parameter for implementing custom Event
-     *              objects handling.
+     * @param event Default parameter for implementing custom Event
+     *              objects handling
      */
     public void onDragOver(DragEvent event) {
         Dragboard db = event.getDragboard();
@@ -56,10 +55,14 @@ public class MainController {
     }
 
     /**
-     * Gets the file dropped and sets up its' contents into the main view.
+     * Gets and read the file dropped and sets up its' contents into the main
+     * view.
      * 
-     * @param event is the default parameter for implementing custom Event
-     *              objects handling.
+     * Since multiple files can be selected, it's designed to always get the
+     * first selected file to be read.
+     * 
+     * @param event Default parameter for implementing custom Event
+     *              objects handling
      */
     public void onDragDropped(DragEvent event) {
         Dragboard db = event.getDragboard();
@@ -74,8 +77,7 @@ public class MainController {
     }
 
     /**
-     * Opens a file chooser and reads and writes the selected file's metadata
-     * into the metadataFields widget.
+     * It opens a FileChooser dialog to the user choose which file to be opened.
      */
     public void openButtonClick() {
         FileChooser chooser = new FileChooser();
@@ -89,7 +91,9 @@ public class MainController {
     }
 
     /**
-     * Save any modification made to the selected file's metadata.
+     * It saves any modification made to the selected file's metadata.
+     * 
+     * It also shows an Alert if setting metadata don't work.
      */
     public void saveButtonClick() {
         if (workingFile != null) {

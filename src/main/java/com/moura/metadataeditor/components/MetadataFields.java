@@ -8,7 +8,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 /**
- * A class responsible for showing the user all the fields that a file contains.
+ * MetadataFields is a class that works as widget, grouping several
+ * MetadataField objects.
+ * 
+ * @author De Moura
  */
 public class MetadataFields extends ScrollPane {
 
@@ -17,6 +20,9 @@ public class MetadataFields extends ScrollPane {
 
 	private VBox fieldsPanel = new VBox();
 
+	/**
+	 * Creates a MetadataFields object.
+	 */
 	public MetadataFields() {
 		super();
 		setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -26,13 +32,20 @@ public class MetadataFields extends ScrollPane {
 	}
 
 	/**
-	 * Sets all the metadata fields in the component through a map. Whenever
-	 * this function is called, it cleans old metadata within this pane.
+	 * Generates MetadataField objects and adds them to this class instance.
 	 * 
-	 * @param metadata Map of strings containing all the fields and its values.
+	 * This method reads a Map<String, String> object, that is, the metadata,
+	 * and generates MetadataField objects with its' keys as the fields names
+	 * and its' values as the values of the fields.
+	 * 
+	 * Too assure that no substantial data remains in this widget from previous
+	 * setups, all the MetadataField instances are removed.
+	 * 
+	 * @param metadata Map of strings containing all the metadata fields and
+	 *                 its' values
 	 */
 	public void setupFields(Map<String, String> metadata) {
-		clean();
+		clear();
 		for (Map.Entry<String, String> keyValue : metadata.entrySet()) {
 			MetadataField mField = new MetadataField(keyValue.getKey(), keyValue.getValue());
 			fieldsPanel.getChildren().add(mField);
@@ -41,9 +54,9 @@ public class MetadataFields extends ScrollPane {
 	}
 
 	/**
-	 * Remove all the fields and their values.
+	 * Removes all MetadataField instances.
 	 */
-	public void clean() {
+	public void clear() {
 		fields.forEach((x, y) -> {
 			fieldsPanel.getChildren().remove(y);
 		});
@@ -51,13 +64,13 @@ public class MetadataFields extends ScrollPane {
 	}
 
 	/**
-	 * Adds a new field to the component.
+	 * Adds a new MetadataField instance into the component.
 	 * 
-	 * @param key   A String representing the field.
-	 * @param value A String representing the value of the field.
+	 * @param key   The field name
+	 * @param value The value of the field
 	 * 
-	 * @return True when it was possible to add this new field. False when this
-	 *         field already exists.
+	 * @return True for success. False when a field with the same attributes
+	 *         already exists
 	 */
 	public boolean addField(String key, String value) {
 		if (fields.get(key) == null) {
@@ -70,14 +83,12 @@ public class MetadataFields extends ScrollPane {
 	}
 
 	/**
-	 * Removes all the fields according to the respective keys on a
-	 * List<String> object.
+	 * Removes only the specified MetadataField instances.
 	 * 
-	 * @param metadataKeys A List<String> object that contains all the
-	 *                     keys to their respective fields.
+	 * @param metadataFieldNames List of names of the fields to be deleted.
 	 */
-	public void remove(List<String> metadataKeys) {
-		metadataKeys.forEach((key) -> {
+	public void remove(List<String> metadataFieldNames) {
+		metadataFieldNames.forEach((key) -> {
 			MetadataField mField = fields.get(key);
 			fieldsPanel.getChildren().remove(mField);
 			fields.remove(key);
@@ -85,10 +96,9 @@ public class MetadataFields extends ScrollPane {
 	}
 
 	/**
-	 * Gets all the metadata in the MetadataFields component and parse all
-	 * these to a Map<String, String> object.
+	 * Returns the metadata inserted into the MetadataFields widget into a Map.
 	 * 
-	 * @return A Map<String, String> object containing the metadata fields.
+	 * @return The metadata
 	 */
 	public Map<String, String> getMetadata() {
 		Map<String, String> metadata = new HashMap<>();

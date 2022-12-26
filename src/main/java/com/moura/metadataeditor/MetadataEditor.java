@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Model responsible for creating exiftool processes to change or read metadata.
+ * Class that works as model for reading and editing files' metadata.
  * 
  * @author de Moura
  */
@@ -54,6 +54,13 @@ public class MetadataEditor {
 		}
 	}
 
+	/**
+	 * It fetchs a collection of metadata fields that can be safely edited by
+	 * the user.
+	 * 
+	 * @param file File to be read
+	 * @return Map of metadata fields
+	 */
 	public static Map<String, String> getNeededMetadata(File file) {
 		Map<String, String> fileMetadata = getMetadata(file);
 		for (String commonKey : commonKeys) {
@@ -66,9 +73,9 @@ public class MetadataEditor {
 	/**
 	 * Sets a new metadata to the file.
 	 * 
-	 * @param newMetadata A map containing all the metadata fields that needs to
-	 *                    be changed.
-	 * @return True when the metadata is successfully set, otherwise false.
+	 * @param newMetadata Map containing all the metadata fields that needs to
+	 *                    be changed
+	 * @return True when the metadata is successfully set, otherwise false
 	 */
 	public static boolean setMetadata(File file, Map<String, String> newMetadata) {
 		if (!file.exists()) {

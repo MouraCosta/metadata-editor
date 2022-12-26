@@ -8,8 +8,33 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import nz.co.rossphillips.thumbnailer.Thumbnailer;
 
+/**
+ * Class containing a main utility method for fetching thumbnails from files.
+ * 
+ * @author De Moura
+ */
 public class ThumbnailLoader {
 
+    /**
+     * Obtains the thumbnail of a file.
+     * 
+     * For now, there are a few supported file types from which it's possible to
+     * fetch a thumbnail. The following file types are:
+     * <ul>
+     * <li>PDF
+     * <li>PNG
+     * <li>JPG
+     * <li>GIF
+     * <li>BMP
+     * <li>DOCX
+     * </ul>
+     * 
+     * When the given file type is not in the supported list above, this method
+     * will return a generic thumbnail.
+     * 
+     * @param file The file from which the thumbnail will be fetched
+     * @return A Image which is the thumbnail itself
+     */
     public static Image generateThumbnail(File file) {
 
         Thumbnailer thumbnailer = new Thumbnailer();
