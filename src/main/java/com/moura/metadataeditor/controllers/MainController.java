@@ -97,8 +97,16 @@ public class MainController {
      */
     public void saveButtonClick() {
         if (workingFile != null) {
-            if (!MetadataEditor.setMetadata(workingFile, metadataFields.getMetadata())) {
+            if (!metadataFields.isValid()) {
                 Alert errorDialog = new Alert(AlertType.ERROR);
+                errorDialog.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheets/dialog.css").toExternalForm());
+                errorDialog.setHeaderText("Misconfiguration detected");
+                errorDialog.setContentText("Looks like you either have repeated "
+                + "fields or the field names don't match the pattern for metadata field names");
+                errorDialog.show();
+            } else if (!MetadataEditor.setMetadata(workingFile, metadataFields.getMetadata())) {
+                Alert errorDialog = new Alert(AlertType.ERROR);
+                errorDialog.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheets/dialog.css").toExternalForm());
                 errorDialog.setHeaderText("Something went wrong!");
                 errorDialog.setContentText("Looks like something went wrong with "
                         + "ExifTool. Either the given arguments are wrong or the operation with this "
@@ -107,6 +115,7 @@ public class MainController {
             }
         } else {
             Alert alertDialog = new Alert(AlertType.INFORMATION);
+            alertDialog.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheets/dialog.css").toExternalForm());
             alertDialog.setContentText("First select a file before trying to save "
                     + "anything.");
             alertDialog.show();

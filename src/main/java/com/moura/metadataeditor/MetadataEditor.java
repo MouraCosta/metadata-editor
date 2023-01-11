@@ -96,6 +96,7 @@ public class MetadataEditor {
 			Process proc = new ProcessBuilder(command).start();
 			proc.waitFor();
 			if (proc.exitValue() == 1) {
+				logger.info("Exiftool returned an error.");
 				return false;
 			}
 		} catch (IOException | InterruptedException err) {
