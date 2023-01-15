@@ -1,12 +1,10 @@
 package com.moura.metadataeditor.components;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -28,10 +26,8 @@ public class MetadataField extends AnchorPane {
 	private TextField fieldinfo;
 	@FXML
 	private Button deleteButton = new Button();
-	private boolean valid = false;
 
-	final private List<Node> NODES_IN_PARENT;
-
+	final private MetadataFields ROOT;
 	final Pattern FIELD_NAME_PATTERN = Pattern.compile("^(?:[A-Z][a-z]*)+(?:[\\s-][A-Z][a-z]*)*$");
 
 	/**
@@ -40,7 +36,7 @@ public class MetadataField extends AnchorPane {
 	 * @param fieldName   The field name
 	 * @param parentNodes Reference to where this Node belongs.
 	 */
-	public MetadataField(String fieldName, List<Node> parentNodes) {
+	public MetadataField(String fieldName, MetadataFields root) {
 		super();
 		FXMLLoader loader = new FXMLLoader(
 				this.getClass().getResource("/views/metadata_field_view.fxml"));
@@ -52,7 +48,7 @@ public class MetadataField extends AnchorPane {
 			e.printStackTrace();
 		}
 
-		NODES_IN_PARENT = parentNodes;
+		ROOT = root;
 
 		fieldname.setText(fieldName);
 
@@ -68,8 +64,8 @@ public class MetadataField extends AnchorPane {
 	 * @param fieldName The field name
 	 * @param value     The value
 	 */
-	public MetadataField(String fieldName, String value, List<Node> parentNodes) {
-		this(fieldName, parentNodes);
+	public MetadataField(String fieldName, String value, MetadataFields root) {
+		this(fieldName, root);
 		fieldinfo.setText(value);
 	}
 
@@ -78,7 +74,7 @@ public class MetadataField extends AnchorPane {
 	 * 
 	 * @return The value in this metadata field
 	 */
-	public String getText() {
+	public String getFieldInfo() {
 		return fieldinfo.getText();
 	}
 
@@ -86,39 +82,46 @@ public class MetadataField extends AnchorPane {
 		return fieldname.getText();
 	}
 
+	public void setFieldInfo(String newText) {
+		fieldinfo.setText(newText);
+	}
+
+	public void setFieldName(String newFieldName) {
+		fieldname.setText(newFieldName);
+	}
+
 	/**
 	 * Deletes this node from the parent.
 	 */
 	public void delete() {
-		NODES_IN_PARENT.remove(this);
+		ROOT.removeField(this);
 	}
 
-	public void validateFocused(boolean newVal) {
-		if (newVal) {
+	public void validateFocused(boolean focused) {
+		if (focused) {
 			// TextField is focused now. Reset to its' original state.
 			fieldname.setStyle("-fx-text-fill: white");
 		} else {
 			// TextField has lost focus. Check for errors.
-			fieldNameInstances = 0;
-			NODES_IN_PARENT.forEach((node) -> {
-				MetadataField current = (MetadataField) node;
-				if (current.getFieldName().equals(this.getFieldName())) {
-					fieldNameInstances++;
-				}
-			});
-			if (fieldNameInstances > 1) {
-				fieldname.setStyle("-fx-text-fill: red");
-				valid = false;
-			}else if (!FIELD_NAME_PATTERN.matcher(getFieldName()).matches()) {
-				fieldname.setStyle("-fx-text-fill: red");
-				valid = false;
-			} else {
-				valid = true;
-			}
+			isValid();
 		}
 	}
 
 	public boolean isValid() {
-		return valid;
+		fieldNameInstances = 0;
+		ROOT.getFields().forEach((node) -> {
+			MetadataField current = (MetadataField) node;
+			if (current.getFieldName().equals(this.getFieldName())) {
+				fieldNameInstances++;
+			}
+		});
+		if (fieldNameInstances > 1) {
+			fieldname.setStyle("-fx-text-fill: red");
+			return false;
+		} else if (!FIELD_NAME_PATTERN.matcher(getFieldName()).matches()) {
+			fieldname.setStyle("-fx-text-fill: red");
+			return false;
+		}
+		return true;
 	}
 }

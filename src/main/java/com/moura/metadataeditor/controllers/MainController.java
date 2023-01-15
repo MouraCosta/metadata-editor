@@ -9,9 +9,9 @@ import com.moura.metadataeditor.components.MetadataFields;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -92,33 +92,25 @@ public class MainController {
 
     /**
      * It saves any modification made to the selected file's metadata.
-     * 
-     * It also shows an Alert if setting metadata don't work.
      */
     public void saveButtonClick() {
         if (workingFile != null) {
             if (!metadataFields.isValid()) {
-                Alert errorDialog = new Alert(AlertType.ERROR);
-                errorDialog.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheets/dialog.css").toExternalForm());
-                errorDialog.setHeaderText("Misconfiguration detected");
-                errorDialog.setContentText("Looks like you either have repeated "
-                + "fields or the field names don't match the pattern for metadata field names");
-                errorDialog.show();
+                showDialog("Misconfiguration Detected",
+                        "Looks like you either have repeated fields or the fields names "
+                                + "don't match the pattern of proper field names.",
+                        AlertType.ERROR);
             } else if (!MetadataEditor.setMetadata(workingFile, metadataFields.getMetadata())) {
-                Alert errorDialog = new Alert(AlertType.ERROR);
-                errorDialog.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheets/dialog.css").toExternalForm());
-                errorDialog.setHeaderText("Something went wrong!");
-                errorDialog.setContentText("Looks like something went wrong with "
-                        + "ExifTool. Either the given arguments are wrong or the operation with this "
-                        + "file type is unsupported.");
-                errorDialog.show();
+                showDialog("Something went wrong", "Looks like something went wrong with Exiftool. Either the given "
+                        + "arguments are wrong or the operation with this file types is unsupported.",
+                        AlertType.ERROR);
+            } else {
+                // This block is reached when the metadata was successfully set. Update the
+                // fields.
+                metadataFields.update(workingFile);
             }
         } else {
-            Alert alertDialog = new Alert(AlertType.INFORMATION);
-            alertDialog.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheets/dialog.css").toExternalForm());
-            alertDialog.setContentText("First select a file before trying to save "
-                    + "anything.");
-            alertDialog.show();
+            showDialog(null, "First select a file before trying to save anything.", AlertType.WARNING);
         }
     }
 
@@ -147,7 +139,7 @@ public class MainController {
                     file.getName(), creationDateString, fileType);
             fileLabel.setText(labelOutput);
 
-            metadataFields.setupFields(MetadataEditor.getNeededMetadata(file));
+            metadataFields.setupFields(file);
             Image thumbnailImage = ThumbnailLoader.generateThumbnail(file);
             if (thumbnailImage != null) {
                 fileThumbnail.setImage(thumbnailImage);
@@ -156,5 +148,14 @@ public class MainController {
             }
             workingFile = file;
         }
+    }
+
+    private void showDialog(String headerText, String contentText, Alert.AlertType alertType) {
+        Alert errorDialog = new Alert(alertType);
+        errorDialog.getDialogPane().getStylesheets()
+                .add(getClass().getResource("/stylesheets/dialog.css").toExternalForm());
+        errorDialog.setHeaderText(headerText);
+        errorDialog.setContentText(contentText);
+        errorDialog.show();
     }
 }

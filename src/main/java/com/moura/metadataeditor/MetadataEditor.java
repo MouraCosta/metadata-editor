@@ -85,7 +85,8 @@ public class MetadataEditor {
 		List<String> command = new ArrayList<>();
 		command.add("exiftool");
 		newMetadata.forEach((key, value) -> {
-			if (value != "" && !value.equals(getMetadata(file).get(key))) {
+			String newValue = getMetadata(file).get(key);
+			if (value != "" && !value.equals(newValue)) {
 				command.add(createTag(key.replaceAll(" ", ""), value));
 			}
 		});
@@ -97,6 +98,8 @@ public class MetadataEditor {
 			proc.waitFor();
 			if (proc.exitValue() == 1) {
 				logger.info("Exiftool returned an error.");
+				logger.info("Message returned by exiftool: "
+					+ new String(proc.getInputStream().readAllBytes()));
 				return false;
 			}
 		} catch (IOException | InterruptedException err) {

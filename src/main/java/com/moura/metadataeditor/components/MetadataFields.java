@@ -1,9 +1,13 @@
 package com.moura.metadataeditor.components;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import com.moura.metadataeditor.MetadataEditor;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -19,9 +23,10 @@ import javafx.scene.layout.VBox;
  */
 public class MetadataFields extends ScrollPane {
 
-	private List<MetadataField> fields = new ArrayList<>();
-	private VBox rootBox = new VBox();
+	public List<MetadataField> fields = new ArrayList<>();
+
 	private VBox fieldsPanel = new VBox();
+	private VBox rootBox = new VBox();
 	private Button addButton = new Button("+");
 
 	/**
@@ -58,8 +63,9 @@ public class MetadataFields extends ScrollPane {
 	 * @param metadata Map of strings containing all the metadata fields and
 	 *                 its' values
 	 */
-	public void setupFields(Map<String, String> metadata) {
+	public void setupFields(File file) {
 		clear();
+		Map<String, String> metadata = MetadataEditor.getNeededMetadata(file);
 		metadata.forEach(this::addField);
 		addButton.setVisible(true);
 	}
@@ -79,10 +85,37 @@ public class MetadataFields extends ScrollPane {
 	 * @param value The value of the field
 	 */
 	public void addField(String key, String value) {
-		MetadataField mField = new MetadataField(key, value, fieldsPanel.getChildren());
+		MetadataField mField = new MetadataField(key, value, this);
 		mField.setPadding(new Insets(0, 0, 10, 3));
 		fieldsPanel.getChildren().add(mField);
 		fields.add(mField);
+	}
+
+	public void removeField(MetadataField mField) {
+		fields.remove(mField);
+		fieldsPanel.getChildren().remove(mField);
+	}
+
+	public List<Node> getFields() {
+		return fieldsPanel.getChildren();
+	}
+
+	/**
+	 * Updates the metadata fields.
+	 */
+	public void update(File file) {
+		Map<String, String> newMetadata = MetadataEditor.getNeededMetadata(file);
+		Map<String, String> metadata = getMetadata();
+
+		metadata.putAll(metadata);
+		int index = 0;
+		for (Entry<String, String> entry : newMetadata.entrySet()) {
+			if (metadata.containsKey(entry.getKey())) {
+				((MetadataField) getFields().get(index)).setFieldName(entry.getKey());
+				((MetadataField) getFields().get(index)).setFieldInfo(entry.getValue());
+				index++;
+			}
+		}
 	}
 
 	/**
@@ -93,15 +126,21 @@ public class MetadataFields extends ScrollPane {
 	public Map<String, String> getMetadata() {
 		Map<String, String> metadata = new HashMap<>();
 		fields.forEach((metadataField) -> {
-			metadata.put(metadataField.getFieldName(), metadataField.getText());
+			metadata.put(metadataField.getFieldName(), metadataField.getFieldInfo());
 		});
 		return metadata;
 	}
 
+	/**
+	 * Checks if all the MetadataField instances within this class are valid.
+	 * The condition to be valid is all instances must be valid.
+	 * 
+	 * @return true when all the MetadataField instances are valid, otherwise
+	 *         false
+	 */
 	public boolean isValid() {
-		for (Node node: fieldsPanel.getChildren()) {
-			MetadataField current = (MetadataField) node;
-			if (!current.isValid()) {
+		for (Node node : getFields()) {
+			if (!((MetadataField) node).isValid()) {
 				return false;
 			}
 		}
