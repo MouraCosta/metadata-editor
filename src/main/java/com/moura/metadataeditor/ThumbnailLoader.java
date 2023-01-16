@@ -1,12 +1,17 @@
 package com.moura.metadataeditor;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.util.Collections;
+import java.util.List;
 
+import co.elastic.thumbnails4j.core.Dimensions;
+import co.elastic.thumbnails4j.core.Thumbnailer;
+import co.elastic.thumbnails4j.core.ThumbnailingException;
+import co.elastic.thumbnails4j.docx.DOCXThumbnailer;
+import co.elastic.thumbnails4j.image.ImageThumbnailer;
+import co.elastic.thumbnails4j.pdf.PDFThumbnailer;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import nz.co.rossphillips.thumbnailer.Thumbnailer;
 
 /**
  * Class containing a main utility method for fetching thumbnails from files.
@@ -36,45 +41,37 @@ public class ThumbnailLoader {
      * @return A Image which is the thumbnail itself
      */
     public static Image generateThumbnail(File file) {
-
-        Thumbnailer thumbnailer = new Thumbnailer();
-        thumbnailer.setSize(96, 96);
-
-        // Determine file's MIME type
         String filenameString = file.getName();
-        String mimeString = getMime(filenameString);
-
-        if (mimeString == null) {
+        Thumbnailer thumbnailer = getThumbnailer(filenameString);
+        if (thumbnailer == null) {
             return null;
         }
 
         // Get file's thumbnail
-        FileInputStream targetFileInputStream = null;
+        List<Dimensions> outputDimensions = Collections.singletonList(new Dimensions(99, 97));
+        Image image = null;
         try {
-            targetFileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
+            image = SwingFXUtils.toFXImage(thumbnailer.getThumbnails(file, outputDimensions).get(0), null);
+        } catch (ThumbnailingException e) {
             e.printStackTrace();
-            return null;
         }
-        byte[] thumbnailBytes = thumbnailer.generateThumbnail(targetFileInputStream, mimeString);
-        return new Image(new ByteArrayInputStream(thumbnailBytes));
+        return image;
     }
 
-    private static String getMime(String filename) {
+    private static Thumbnailer getThumbnailer(String filename) {
         filename = filename.toLowerCase();
-        String mimeString = null;
+        Thumbnailer thumbnailer = null;
         if (filename.endsWith(".pdf")) {
-            mimeString = "application/pdf";
-        } else if (filename.endsWith(".png")) {
-            mimeString = "image/png";
-        } else if (filename.endsWith(".jpg")) {
-            mimeString = "image/jpg";
-        } else if (filename.endsWith(".gif")) {
-            mimeString = "image/gif";
-        } else if (filename.endsWith(".bmp")) {
-            mimeString = "image/bmp";
+            thumbnailer = new PDFThumbnailer();
+        } else if (filename.endsWith(".png") || filename.endsWith(".jpg") || (filename.endsWith(".bmp"))) {
+            String imageType = filename.substring(filename.lastIndexOf('.')+1);
+            thumbnailer = new ImageThumbnailer(imageType);
+        } else if (filename.endsWith("docx")) {
+            thumbnailer = new DOCXThumbnailer();
+        } else {
+            return null;
         }
 
-        return mimeString;
+        return thumbnailer;
     }
 }
