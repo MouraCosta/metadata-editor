@@ -28,7 +28,7 @@ public class MetadataField extends AnchorPane {
 	private Button deleteButton = new Button();
 
 	final private MetadataFields ROOT;
-	final Pattern FIELD_NAME_PATTERN = Pattern.compile("^(?:[A-Z][a-z]*)+(?:[\\s-][A-Z][a-z]*)*$");
+	final Pattern FIELD_NAME_PATTERN = Pattern.compile("^(?:[A-Z][a-zA-Z]*)+(?:[\\s-][A-Z][a-zA-Z]*)*$");
 
 	/**
 	 * Creates a metadata field with an empty text box.
