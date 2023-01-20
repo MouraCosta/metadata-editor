@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.moura.app</groupId>
@@ -53,7 +53,7 @@
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
@@ -102,6 +102,12 @@
           <version>3.0.0</version>
         </plugin>
 
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.5.0</version>
+        </plugin>
+
         <!--Added plugins-->
         <plugin>
           <groupId>org.openjfx</groupId>
@@ -126,7 +132,6 @@
             <vendor>De Moura</vendor>
             <destination>target/dist</destination>
             <module>com.moura.metadataeditor/com.moura.metadataeditor.MetadataEditorApp</module>
-            <runtimeImage>target/metadata-editor</runtimeImage>
             <linuxShortcut>true</linuxShortcut>
             <icon>target/classes/images/icon.png</icon>
             <resourceDir>target/classes/utils</resourceDir>
