@@ -68,6 +68,7 @@ public class MetadataFields extends ScrollPane {
 		Map<String, String> metadata = MetadataEditor.getNeededMetadata(file);
 		metadata.forEach(this::addField);
 		addButton.setVisible(true);
+		System.gc();
 	}
 
 	/**
@@ -76,6 +77,7 @@ public class MetadataFields extends ScrollPane {
 	public void clear() {
 		fields.forEach(fieldsPanel.getChildren()::remove);
 		fields.clear();
+		System.gc();
 	}
 
 	/**
@@ -94,6 +96,7 @@ public class MetadataFields extends ScrollPane {
 	public void removeField(MetadataField mField) {
 		fields.remove(mField);
 		fieldsPanel.getChildren().remove(mField);
+		System.gc();
 	}
 
 	public List<Node> getFields() {
@@ -116,6 +119,7 @@ public class MetadataFields extends ScrollPane {
 				index++;
 			}
 		}
+		System.gc();
 	}
 
 	/**
