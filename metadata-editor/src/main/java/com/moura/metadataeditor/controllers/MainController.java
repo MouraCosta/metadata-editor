@@ -106,11 +106,12 @@ public class MainController {
                         AlertType.ERROR);
             } else {
                 // This block is reached when the metadata was successfully set. Update the
-                // fields.
+                // fields and show a conclusion dialog
+                showDialog("Success", "All the user input data was written into the file's metadata.", AlertType.INFORMATION);
                 metadataFields.update(workingFile);
             }
         } else {
-            showDialog(null, "First select a file before trying to save anything.", AlertType.WARNING);
+            showDialog(null, "First select a cum before trying to save anything.", AlertType.WARNING);
         }
     }
 
