@@ -36,6 +36,7 @@ public class MetadataFields extends ScrollPane {
 		super();
 		setHbarPolicy(ScrollBarPolicy.NEVER);
 		setFitToWidth(true);
+
 		fieldsPanel.getStyleClass().add("fields-panel");
 
 		addButton.setOnAction((event) -> {

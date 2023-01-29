@@ -3,11 +3,14 @@ package com.moura.metadataeditor.components;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 /**
  * MetadataField is a class that represents a single entry. It's heavily
@@ -94,7 +97,21 @@ public class MetadataField extends AnchorPane {
 	 * Deletes this node from the parent.
 	 */
 	public void delete() {
-		ROOT.removeField(this);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(500), this);
+		ScaleTransition st = new ScaleTransition(Duration.millis(300), this);
+
+		tt.setByX(this.getWidth());
+		tt.setOnFinished((x) -> {
+			ROOT.removeField(this);
+		});
+
+		st.setFromX(1);
+		st.setFromY(1);
+		st.setToX(0);
+		st.setToY(0);
+
+		st.play();
+		tt.play();
 	}
 
 	public void validateFocused(boolean focused) {

@@ -41,12 +41,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.moura.metadataeditor.controllers.MainController">
   <children>
     <AnchorPane fx:id="mainPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@../stylesheets/main.css" VBox.vgrow="ALWAYS">
       <children>
-            <Label fx:id="fileLabel" alignment="TOP_LEFT" layoutX="148.0" layoutY="36.0" prefHeight="97.0" prefWidth="432.0" stylesheets="@/stylesheets/main.css" text="No file selected" textFill="#e7f6f2" wrapText="true" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="60.0" />
+            <Label fx:id="fileLabel" alignment="TOP_LEFT" layoutX="148.0" layoutY="36.0" prefHeight="97.0" prefWidth="432.0" stylesheets="@/stylesheets/main.css" text="No file selected" textFill="#e7f6f2" wrapText="true" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="60.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
             <ImageView fx:id="fileThumbnail" fitHeight="97.0" fitWidth="99.0" layoutX="34.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="29.0">
                <image>
                   <Image url="@/images/no_file.png" />
