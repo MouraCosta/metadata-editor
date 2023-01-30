@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import com.moura.metadataeditor.MetadataEditor;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -27,7 +28,7 @@ public class MetadataFields extends ScrollPane {
 
 	public List<MetadataField> fields = new ArrayList<>();
 
-	private VBox fieldsPanel = new VBox();
+	private VBox fieldsPanel = new VBox(10);
 	private VBox rootBox = new VBox();
 	private Button addButton = new Button("+");
 
@@ -91,7 +92,7 @@ public class MetadataFields extends ScrollPane {
 	 */
 	public void addField(String key, String value) {
 		MetadataField mField = new MetadataField(key, value, this);
-		mField.setPadding(new Insets(0, 0, 10, 3));
+		mField.setPadding(new Insets(0, 0, 0, 3));
 		fieldsPanel.getChildren().add(mField);
 		fields.add(mField);
 
@@ -102,9 +103,15 @@ public class MetadataFields extends ScrollPane {
 	}
 
 	public void removeField(MetadataField mField) {
-		fields.remove(mField);
-		fieldsPanel.getChildren().remove(mField);
-		System.gc();
+		TranslateTransition tt = new TranslateTransition(Duration.millis(300), mField);
+
+		tt.setByX(this.getWidth());
+		tt.setOnFinished((x) -> {
+			fields.remove(mField);
+			fieldsPanel.getChildren().remove(mField);
+			System.gc();
+		});
+		tt.play();
 	}
 
 	public List<Node> getFields() {
