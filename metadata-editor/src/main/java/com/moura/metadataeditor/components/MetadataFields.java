@@ -9,11 +9,13 @@ import java.util.Map.Entry;
 
 import com.moura.metadataeditor.MetadataEditor;
 
+import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * MetadataFields is a class that works as widget, grouping several
@@ -92,6 +94,11 @@ public class MetadataFields extends ScrollPane {
 		mField.setPadding(new Insets(0, 0, 10, 3));
 		fieldsPanel.getChildren().add(mField);
 		fields.add(mField);
+
+		FadeTransition ft = new FadeTransition(Duration.millis(1000), mField);
+		ft.setFromValue(0);
+		ft.setToValue(1);
+		ft.play();
 	}
 
 	public void removeField(MetadataField mField) {
