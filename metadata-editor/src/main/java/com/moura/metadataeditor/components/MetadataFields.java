@@ -29,7 +29,7 @@ public class MetadataFields extends ScrollPane {
 	public List<MetadataField> fields = new ArrayList<>();
 
 	private VBox fieldsPanel = new VBox(10);
-	private VBox rootBox = new VBox();
+	private VBox rootBox = new VBox(10);
 	private Button addButton = new Button("+");
 
 	/**
