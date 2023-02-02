@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root minHeight="-Infinity" minWidth="-Infinity" prefHeight="57.0" prefWidth="535.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="-Infinity" minWidth="-Infinity" prefHeight="57.0" prefWidth="535.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="fieldinfo" alignment="BOTTOM_LEFT" layoutY="25.0" prefHeight="32.0" prefWidth="484.0" stylesheets="@../stylesheets/metadata_view.css" text="wsssss" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="59.0">
          <padding>
             <Insets bottom="10.0" />
          </padding></TextField>
-      <Button fx:id="deleteButton" layoutX="504.0" layoutY="29.0" mnemonicParsing="false" onAction="#delete" prefHeight="11.0" prefWidth="13.0" stylesheets="@../stylesheets/metadata_view.css" text="-" AnchorPane.rightAnchor="26.0" />
+      <Button fx:id="deleteButton" layoutX="488.0" layoutY="29.0" mnemonicParsing="false" onAction="#delete" prefHeight="11.0" prefWidth="13.0" stylesheets="@../stylesheets/metadata_view.css" text="-" AnchorPane.rightAnchor="24.0" />
       <TextField fx:id="fieldname" prefHeight="24.0" prefWidth="464.0" promptText="Insert Field Name here" stylesheets="@../stylesheets/metadata_view.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="59.0">
          <font>
             <Font name="System Bold" size="13.0" />
