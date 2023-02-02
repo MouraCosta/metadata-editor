@@ -11,14 +11,13 @@
 
 ## Description
 
-Metadata Editor is a program capable of reading and editing files metadata
-easily. The project is the implemented GUI itself. The responsible for editing
-and writing metadata into files is the [exiftool program][exiftool_link],
-written by Phil Harvey.
+Metadata Editor is a JavaFX application that works as an interface for reading
+and editing files metadata easily. The project is the implemented GUI itself.
+The responsible for editing and writing metadata into files is the
+[exiftool program][exiftool_link], written by Phil Harvey.
 
-For now, this application is available in Linux systems only (and probably also
-in others Unix-based systems). But a windows version is about to come if
-possible.
+For now, this application is available for Linux systems only (and probably also
+for others Unix-based systems). A Windows version might be available.
 
 ## Dependencies
 
@@ -26,16 +25,34 @@ possible.
 
 ## Installation
 
-I'll list step to step on how to install this program.
+This program provides a deb package, so the user only need to type
+`sudo apt-get install metadata-editor_1.0.0-1_amd64.deb`.
 
 ## Basic Usage
 
-To an extent, this application is very straight to the point. Much of its'
-functionality is easy to grasp quickly. These are some examples of what's
-possible to do with Metadata Editor.
+The application itself is pretty simple as it is intended to do the common
+tasks, reading and writing.
 
 ### Reading Files Metadata
+<figure>
+    <img src="docs/dnd_metadata_editor.gif"
+    alt="DnD support on Metadata Editor" width=960 height=540>
+    <figcaption>Drag and Drop support for opening files</figcaption>
+</figure>
+
+<figure>
+    <img src="docs/std_metadata_editor.gif"
+    alt="Opening files manually" width=960 height=540>
+    <figcaption>It's also possible to manually open files</figcaption>
+</figure>
+
 ### Writing Custom Metadata into a File
+
+<figure>
+    <img src="docs/editing_metadata_editor.gif"
+    alt="Editing metadata fields" width=960 height=540>
+    <figcaption>Editing metadata fields</figcaption>
+</figure>
 
 ## Authors
 
