@@ -58,8 +58,4 @@ tasks, reading and writing.
 
 * De Moura (aka smolBlackCat)
 
-# Licence
-
-I haven't chose a licence yet.
-
 [exiftool_link]: https://github.com/exiftool/exiftool
